@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="165dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivKamar"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:src="@drawable/room1"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/tvNama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OYO 15265 VIP ROOM"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-light"
+                />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="☆ 5"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="5dp"
+                android:textColor="#32CD32"
+                />
+
+            <TextView
+                android:id="@+id/tvLokasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jakarta Barat, Cengkareng"
+                android:paddingLeft="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

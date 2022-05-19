@@ -10,6 +10,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.java_hotel_system.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class BottomNavigationActivity extends AppCompatActivity {
 
     @Override
