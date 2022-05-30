@@ -10,6 +10,10 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="facebook_app_id">1849300268741473</string>
+    <string name="fb_login_protocol_scheme">fb1849300268741473</string>
+    <string name="facebook_client_token">c1087e3572cfc66fe79071f5ede7f3da</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_web_client">606600641805-6cmtbgdohp7ciipnfvmcea90ic8ehshs.apps.googleusercontent.com</string>
 </resources>

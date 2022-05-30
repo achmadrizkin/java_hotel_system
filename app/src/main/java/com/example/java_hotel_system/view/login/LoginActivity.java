@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
 import com.example.java_hotel_system.view.splash_screen.MainActivity;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -35,7 +36,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSkip;
-    private ImageView ivGoogle;
+    private ImageView ivGoogle, ivFacebook;
 
     //
     private String TAG = "LoginActivity";
@@ -48,8 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         tvSkip = findViewById(R.id.tvSkip);
         ivGoogle = findViewById(R.id.ivGoogle);
+        ivFacebook = findViewById(R.id.ivFacebook);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -73,6 +76,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // sign up or login
                 signIn();
+            }
+        });
+
+        ivFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent p = new Intent(LoginActivity.this, FacebookAuth.class);
+                p.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(p);
             }
         });
     }
@@ -106,10 +118,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Success Sign In", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Sign In", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }

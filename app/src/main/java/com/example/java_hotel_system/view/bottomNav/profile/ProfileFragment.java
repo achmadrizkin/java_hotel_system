@@ -57,11 +57,11 @@ public class ProfileFragment extends Fragment {
         if (user != null) {
             if (user.getDisplayName() != "" && user.getPhotoUrl().toString() != "") {
                 tvDisplayName.setText(user.getDisplayName());
-                tvEmail.setText(user.getEmail());
+                tvEmail.setText(user.getUid());
                 Glide.with(profile_image).load(user.getPhotoUrl()).into(profile_image);
-            } else if (user.getEmail() == null || user.getEmail() == "") {
+            } else if (user.getDisplayName() == null || user.getDisplayName() == "") {
                 tvDisplayName.setText("Anonim");
-                tvEmail.setText(user.getEmail());
+                tvEmail.setText(user.getUid());
                 Glide.with(profile_image).load(user.getPhotoUrl()).into(profile_image);
             }
 
