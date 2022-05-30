@@ -56,7 +56,8 @@ public class HomeFragment extends Fragment {
 
     private void initRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.rcyclerHome);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerViewAdapter = new RecyclerViewHorizontal();
         recyclerView.setAdapter(recyclerViewAdapter);
     }

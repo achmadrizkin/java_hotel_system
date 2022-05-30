@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "606600641805",
+    "project_id": "mobprog-auth",
+    "storage_bucket": "mobprog-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606600641805:android:5abc8e50e8dd7c2ff64444",
+        "android_client_info": {
+          "package_name": "com.example.java_hotel_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606600641805-kqv6gtt7kaudefb5p99idj5c3u7nhk1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.java_hotel_system",
+            "certificate_hash": "0af0ef67864b6fe8cb9efb16ce81374b9fd6bdc6"
+          }
+        },
+        {
+          "client_id": "606600641805-6cmtbgdohp7ciipnfvmcea90ic8ehshs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiT7dhDp9qgAZsyhCKm_SVK-Q94CvhLl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606600641805-6cmtbgdohp7ciipnfvmcea90ic8ehshs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
