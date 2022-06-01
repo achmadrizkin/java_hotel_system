@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.model.user.PostUserRequest;
-import com.example.java_hotel_system.model.user.PostUserResponse;
-import com.example.java_hotel_system.service.RetroService;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
 import com.example.java_hotel_system.view_model.LoginViewModel;
@@ -34,10 +32,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import retrofit2.Retrofit;
 
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
@@ -132,15 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
                     finish();
 
-                    //
+                    // POST IF USER FIRST TIME LOGIN
+                    // IF USER ALREADY LOGIN, it just update
                     if (mAuth.getCurrentUser() != null) {
                         PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString());
                         postUserByLoginFromApiCall(a);
-                    } else {
-                        PostUserRequest a = new PostUserRequest("ASHIAPPPPpp","12345","www.ashiap.com");
-                        postUserByLoginFromApiCall(a);
                     }
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Sign In", Toast.LENGTH_LONG).show();
                 }
