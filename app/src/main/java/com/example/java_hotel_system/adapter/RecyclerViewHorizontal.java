@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.model.kamar.Kamar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHorizontal.MyViewHolder> {
@@ -32,7 +33,7 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHorizontal.MyViewHolder holder, int position) {
         holder.tvNama.setText(listItems.get(position).getNama());
-        holder.tvLokasi.setText(listItems.get(position).getLokasi());
+        holder.tvLokasi.setText(listItems.get(position).getKota());
         holder.tvRating.setText(listItems.get(position).getRating());
         Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).into(holder.ivKamar);
     }

@@ -19,8 +19,27 @@ public class HomeRepo {
         this.retroServiceInterface = retroServiceInterface;
     }
 
-    public void makeAPICall(MutableLiveData<List<Kamar>> liveData, String nama) {
-        Call<KamarList> call  = retroServiceInterface.getSearchKamar(nama);
+    public void getALlHotelApiCall(MutableLiveData<List<Kamar>> liveData) {
+        Call<KamarList> call  = retroServiceInterface.getALlHotel();
+        call.enqueue(new Callback<KamarList>() {
+            @Override
+            public void onResponse(Call<KamarList> call, Response<KamarList> response) {
+                if(response.isSuccessful()) {
+                    liveData.postValue(response.body().getData());
+                } else {
+                    liveData.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KamarList> call, Throwable t) {
+                liveData.postValue(null);
+            }
+        });
+    }
+
+    public void getTrendingHotelApiCall(MutableLiveData<List<Kamar>> liveData) {
+        Call<KamarList> call  = retroServiceInterface.getTrendingHotel();
         call.enqueue(new Callback<KamarList>() {
             @Override
             public void onResponse(Call<KamarList> call, Response<KamarList> response) {

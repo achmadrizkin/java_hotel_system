@@ -28,10 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
-    private RecyclerViewHorizontal recyclerViewAdapter;
+    private RecyclerViewHorizontal recyclerViewAdapterAllRoom, recyclerViewAdapterTrendingRoom;
     ConstraintLayout clHome;
     EditText inputBookName;
-    RecyclerView rcyclerHome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,65 +45,67 @@ public class HomeFragment extends Fragment {
 
         inputBookName = view.findViewById(R.id.inputBookName);
         clHome = view.findViewById(R.id.clHome);
-        rcyclerHome = view.findViewById(R.id.rcyclerHome);
 
-        initRecyclerView(view);
-        initSearchBook();
+        // get all room
+        initRecyclerViewAllRoom(view);
+        getAllHotel();
+
+        // get trending room
+        initRecyclerViewTrendingRoom(view);
+        getTrendingHotel();
 
         return view;
     }
 
-    private void initRecyclerView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.rcyclerHome);
-        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerViewAdapter = new RecyclerViewHorizontal();
-        recyclerView.setAdapter(recyclerViewAdapter);
+    private void initRecyclerViewAllRoom(View view) {
+        recyclerViewAdapterAllRoom = new RecyclerViewHorizontal();
+        RecyclerView rvAllRoom = view.findViewById(R.id.rvAllRoom);
+
+        //
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvAllRoom.setLayoutManager(horizontalLayoutManager);
+        rvAllRoom.setAdapter(recyclerViewAdapterAllRoom);
     }
 
-    private void initSearchBook() {
-        inputBookName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    private void initRecyclerViewTrendingRoom(View view) {
+        recyclerViewAdapterTrendingRoom = new RecyclerViewHorizontal();
+        RecyclerView rvTrendingRoom = view.findViewById(R.id.rvTrendingRoom);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                makeApiCall(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        //
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvTrendingRoom.setLayoutManager(horizontalLayoutManager);
+        rvTrendingRoom.setAdapter(recyclerViewAdapterTrendingRoom);
     }
 
-    private void makeApiCall(String nama) {
+    private void getAllHotel() {
         HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel.getSearchKamarObservable().observe(getActivity(), new Observer<List<Kamar>>() {
+        viewModel.getALlHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
             @Override
             public void onChanged(List<Kamar> recyclerData) {
                 if (recyclerData != null) {
-                    // berhasil
-                    recyclerViewAdapter.setListDataItems(recyclerData);
-                    recyclerViewAdapter.notifyDataSetChanged();
-
-                    clHome.setVisibility(View.GONE);
-                    rcyclerHome.setVisibility(View.VISIBLE);
+                    recyclerViewAdapterAllRoom.setListDataItems(recyclerData);
+                    recyclerViewAdapterAllRoom.notifyDataSetChanged();
                 } else {
-                    clHome.setVisibility(View.VISIBLE);
-                    rcyclerHome.setVisibility(View.GONE);
-                    // if not search
-                }
-
-                if (nama.isEmpty() || nama == "") {
-                    clHome.setVisibility(View.VISIBLE);
-                    rcyclerHome.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        viewModel.getSearchKamar(nama);
+        viewModel.getALlHotelOfData();
+    }
+
+    private void getTrendingHotel() {
+        HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel.getTrendingHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
+            @Override
+            public void onChanged(List<Kamar> recyclerData) {
+                if (recyclerData != null) {
+                    recyclerViewAdapterTrendingRoom.setListDataItems(recyclerData);
+                    recyclerViewAdapterTrendingRoom.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        viewModel.getTrendingHotelOfData();
     }
 }

@@ -11,9 +11,12 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RetroService {
-    @GET("kamar/{nama}")
-    Call<KamarList> getSearchKamar(@Path("nama") String nama);
-
     @POST("insert_user.php")
     Call<PostUserRequest> postUserByLogin(@Body PostUserRequest postUserRequest);
+
+    @GET("select.php")
+    Call<KamarList> getALlHotel();
+
+    @GET("select_trending.php")
+    Call<KamarList> getTrendingHotel();
 }

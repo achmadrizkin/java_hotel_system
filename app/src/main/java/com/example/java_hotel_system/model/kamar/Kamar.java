@@ -7,19 +7,21 @@ public class Kamar {
     private String rating;
     private String harga;
     private String lokasi;
+    private String kota;
     private String deskripsi;
     private String jmlh_kasur;
     private String jmlh_ruangan;
     private String kode_kamar;
     private String status_kamar;
 
-    public Kamar(String id, String nama, String image_url, String rating, String harga, String lokasi, String deskripsi, String jmlh_kasur, String jmlh_ruangan, String kode_kamar, String status_kamar) {
+    public Kamar(String id, String nama, String image_url, String rating, String harga, String lokasi, String deskripsi, String jmlh_kasur, String jmlh_ruangan, String kode_kamar, String status_kamar, String kota) {
         this.id = id;
         this.nama = nama;
         this.image_url = image_url;
         this.rating = rating;
         this.harga = harga;
         this.lokasi = lokasi;
+        this.kota = kota;
         this.deskripsi = deskripsi;
         this.jmlh_kasur = jmlh_kasur;
         this.jmlh_ruangan = jmlh_ruangan;
@@ -113,5 +115,13 @@ public class Kamar {
 
     public void setStatus_kamar(String status_kamar) {
         this.status_kamar = status_kamar;
+    }
+
+    public String getKota() {
+        return kota;
+    }
+
+    public void setKota(String kota) {
+        this.kota = kota;
     }
 }
