@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @InstallIn(SingletonComponent.class)
 public class AppModule {
     // localhost:3000/v1/products
-    String BASE_URL = "http://10.0.2.2:3000/v1/";
+    String BASE_URL = "https://achmadrizkin.my.id/mobprog_hotel/";
 
     @Singleton
     @Provides

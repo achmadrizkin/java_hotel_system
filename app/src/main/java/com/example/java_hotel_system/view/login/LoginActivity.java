@@ -1,10 +1,11 @@
 package com.example.java_hotel_system.view.login;
 
-import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
+import com.example.java_hotel_system.model.user.PostUserRequest;
+import com.example.java_hotel_system.model.user.PostUserResponse;
+import com.example.java_hotel_system.service.RetroService;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
-import com.example.java_hotel_system.view.splash_screen.MainActivity;
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.example.java_hotel_system.view_model.LoginViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,9 +32,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import retrofit2.Retrofit;
+
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSkip;
     private ImageView ivGoogle, ivFacebook;
@@ -43,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
+
+    //
+    private LoginViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         ivFacebook = findViewById(R.id.ivFacebook);
 
         mAuth = FirebaseAuth.getInstance();
+
+        //
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("606600641805-6cmtbgdohp7ciipnfvmcea90ic8ehshs.apps.googleusercontent.com")
@@ -119,6 +131,16 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Success Sign In", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
                     finish();
+
+                    //
+                    if (mAuth.getCurrentUser() != null) {
+                        PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString());
+                        postUserByLoginFromApiCall(a);
+                    } else {
+                        PostUserRequest a = new PostUserRequest("ASHIAPPPPpp","12345","www.ashiap.com");
+                        postUserByLoginFromApiCall(a);
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Sign In", Toast.LENGTH_LONG).show();
                 }
@@ -126,5 +148,26 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    private void postUserByLoginFromApiCall(PostUserRequest postUserRequest) {
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        viewModel.postUserByLoginObservable().observe(LoginActivity.this, new Observer<PostUserRequest>() {
+            @Override
+            public void onChanged(PostUserRequest recyclerData) {
+                if (recyclerData == null) {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Failed to create/update new user",
+                            Toast.LENGTH_LONG
+                    ).show();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Success to create/update new user",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+        });
+        viewModel.postUserByLoginOfData(postUserRequest);
+    }
 }
