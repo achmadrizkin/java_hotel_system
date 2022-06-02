@@ -1,12 +1,13 @@
 package com.example.java_hotel_system.model.user;
 
 public class PostUserRequest {
-    private String name, uid, image_url;
+    private String name, uid, image_url, log_via;
 
-    public PostUserRequest(String name, String uid, String image_url) {
+    public PostUserRequest(String name, String uid, String image_url, String log_via) {
         this.name = name;
         this.uid = uid;
         this.image_url = image_url;
+        this.log_via = log_via;
     }
 
     public String getName() {
@@ -31,5 +32,13 @@ public class PostUserRequest {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public String getLog_via() {
+        return log_via;
+    }
+
+    public void setLog_via(String log_via) {
+        this.log_via = log_via;
     }
 }

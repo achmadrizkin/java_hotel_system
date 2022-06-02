@@ -94,12 +94,12 @@ public class FacebookAuth extends LoginActivity {
                             // POST IF USER FIRST TIME LOGIN
                             // IF USER ALREADY LOGIN, it just update
                             if (mAuth.getCurrentUser() != null) {
-                                PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString());
+                                PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString(), "FACEBOOK");
                                 postUserByLoginFromApiCall(a);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(getApplicationContext(), "Email sudah pernah digunakan",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

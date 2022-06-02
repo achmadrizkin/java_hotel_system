@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     // POST IF USER FIRST TIME LOGIN
                     // IF USER ALREADY LOGIN, it just update
                     if (mAuth.getCurrentUser() != null) {
-                        PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString());
+                        PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString(), "GOOGLE");
                         postUserByLoginFromApiCall(a);
                     }
                 } else {
