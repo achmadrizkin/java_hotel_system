@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetroService {
     @POST("insert_user.php")
@@ -19,4 +19,7 @@ public interface RetroService {
 
     @GET("select_trending.php")
     Call<KamarList> getTrendingHotel();
+
+    @GET("search_kamar.php")
+    Call<KamarList> getSearchKamar(@Query("name") String name);
 }

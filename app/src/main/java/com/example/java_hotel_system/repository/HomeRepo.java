@@ -56,4 +56,23 @@ public class HomeRepo {
             }
         });
     }
+
+    public void getSearchKamarApiCall(MutableLiveData<List<Kamar>> liveData, String name) {
+        Call<KamarList> call  = retroServiceInterface.getSearchKamar(name);
+        call.enqueue(new Callback<KamarList>() {
+            @Override
+            public void onResponse(Call<KamarList> call, Response<KamarList> response) {
+                if(response.isSuccessful()) {
+                    liveData.postValue(response.body().getData());
+                } else {
+                    liveData.postValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KamarList> call, Throwable t) {
+                liveData.postValue(null);
+            }
+        });
+    }
 }

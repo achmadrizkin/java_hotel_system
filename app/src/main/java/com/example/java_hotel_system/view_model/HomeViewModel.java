@@ -17,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class HomeViewModel extends ViewModel {
     MutableLiveData<List<Kamar>> allKamarLiveData;
     MutableLiveData<List<Kamar>> trendingKamarLiveData;
+    MutableLiveData<List<Kamar>> getSearchKamarLiveData;
 
     @Inject
     RetroService retroService;
@@ -25,6 +26,7 @@ public class HomeViewModel extends ViewModel {
     public HomeViewModel() {
         allKamarLiveData = new MutableLiveData();
         trendingKamarLiveData = new MutableLiveData();
+        getSearchKamarLiveData = new MutableLiveData();
     }
 
     public MutableLiveData<List<Kamar>> getALlHotelObservable() {
@@ -33,6 +35,9 @@ public class HomeViewModel extends ViewModel {
 
     public MutableLiveData<List<Kamar>> getTrendingHotelObservable() {
         return trendingKamarLiveData;
+    }
+    public MutableLiveData<List<Kamar>> getSearchHotelObservable() {
+        return getSearchKamarLiveData;
     }
 
     public void getALlHotelOfData() {
@@ -43,5 +48,10 @@ public class HomeViewModel extends ViewModel {
     public void getTrendingHotelOfData() {
         HomeRepo homeRepo = new HomeRepo(retroService);
         homeRepo.getTrendingHotelApiCall(trendingKamarLiveData);
+    }
+
+    public void  getSearchHotelOfData(String name) {
+        HomeRepo homeRepo = new HomeRepo(retroService);
+        homeRepo.getSearchKamarApiCall(getSearchKamarLiveData, name);
     }
 }

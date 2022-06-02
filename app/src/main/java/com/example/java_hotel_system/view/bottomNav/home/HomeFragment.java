@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
@@ -28,9 +30,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
-    private RecyclerViewHorizontal recyclerViewAdapterAllRoom, recyclerViewAdapterTrendingRoom;
+    private RecyclerViewHorizontal recyclerViewAdapterAllRoom, recyclerViewAdapterTrendingRoom, recyclerViewAdapterSearchRoom;
     ConstraintLayout clHome;
+    RecyclerView rcyclerHome;
     EditText inputBookName;
+
+    //
+    private ImageView ivNoResult;
+    private TextView tvNoResult;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,15 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         inputBookName = view.findViewById(R.id.inputBookName);
+        rcyclerHome = view.findViewById(R.id.rcyclerHome);
         clHome = view.findViewById(R.id.clHome);
+
+        ivNoResult = view.findViewById(R.id.ivNoResult);
+        tvNoResult = view.findViewById(R.id.tvNoResult);
+
+        //
+        initSearchBook();
+        initRecyclerViewSearchRoom(view);
 
         // get all room
         initRecyclerViewAllRoom(view);
@@ -55,6 +70,69 @@ public class HomeFragment extends Fragment {
         getTrendingHotel();
 
         return view;
+    }
+
+    private void initSearchBook() {
+        inputBookName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                makeApiCall(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void makeApiCall(String nama) {
+        HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel.getSearchHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
+            @Override
+            public void onChanged(List<Kamar> recyclerData) {
+                if (recyclerData != null) {
+                    // berhasil
+                    recyclerViewAdapterSearchRoom.setListDataItems(recyclerData);
+                    recyclerViewAdapterSearchRoom.notifyDataSetChanged();
+
+                    clHome.setVisibility(View.GONE);
+                    rcyclerHome.setVisibility(View.VISIBLE);
+
+                    ivNoResult.setVisibility(View.GONE);
+                    tvNoResult.setVisibility(View.GONE);
+                } else {
+                    clHome.setVisibility(View.GONE);
+                    rcyclerHome.setVisibility(View.GONE);
+
+                    // IF DATA NULL
+                    ivNoResult.setVisibility(View.VISIBLE);
+                    tvNoResult.setVisibility(View.VISIBLE);
+                }
+
+                if (nama.isEmpty() || nama == "") {
+                    clHome.setVisibility(View.VISIBLE);
+                    rcyclerHome.setVisibility(View.GONE);
+
+                    ivNoResult.setVisibility(View.GONE);
+                    tvNoResult.setVisibility(View.GONE);
+                }
+            }
+        });
+        viewModel.getSearchHotelOfData(nama);
+    }
+
+    private void initRecyclerViewSearchRoom(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.rcyclerHome);
+        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerViewAdapterSearchRoom = new RecyclerViewHorizontal();
+        recyclerView.setAdapter(recyclerViewAdapterSearchRoom);
     }
 
     private void initRecyclerViewAllRoom(View view) {
