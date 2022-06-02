@@ -8,10 +8,12 @@
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/drawable-v24/ic_money.xml" value="0.1" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/drawable-v24/ic_person.xml" value="0.2115" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/drawable/ic_password.xml" value="0.1255" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout-w1240dp/ic_search.xml" value="0.148828125" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.15" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_facebook_auth.xml" value="0.20416666666666666" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_get_by_city.xml" value="0.33" />
+        <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_github_auth.xml" value="0.25" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Rizki/.JAVA/java_hotel_system/app/src/main/res/layout/activity_room_detail.xml" value="0.20416666666666666" />

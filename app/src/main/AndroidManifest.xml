@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Java_hotel_system"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.login.github.GithubAuth"
+            android:exported="false" />
+        <activity
             android:name=".view.bottomNav.room_detail.RoomDetailActivity"
             android:exported="false" />
         <activity

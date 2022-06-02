@@ -19,6 +19,7 @@ import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.model.user.PostUserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
+import com.example.java_hotel_system.view.login.github.GithubAuth;
 import com.example.java_hotel_system.view_model.LoginViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -38,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
     private TextView tvSkip;
-    private ImageView ivGoogle, ivFacebook;
+    private ImageView ivGoogle, ivFacebook, ivGithub;
 
     //
     private String TAG = "LoginActivity";
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         tvSkip = findViewById(R.id.tvSkip);
         ivGoogle = findViewById(R.id.ivGoogle);
         ivFacebook = findViewById(R.id.ivFacebook);
+        ivGithub = findViewById(R.id.ivGithub);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -91,6 +93,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent p = new Intent(LoginActivity.this, FacebookAuth.class);
+                p.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(p);
+            }
+        });
+
+        ivGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent p = new Intent(LoginActivity.this, GithubAuth.class);
                 p.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(p);
             }
