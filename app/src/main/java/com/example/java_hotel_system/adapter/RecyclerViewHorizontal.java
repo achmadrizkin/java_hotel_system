@@ -1,5 +1,6 @@
 package com.example.java_hotel_system.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,11 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.model.kamar.Kamar;
+import com.example.java_hotel_system.view.bottomNav.home.byCity.GetByCityActivity;
+import com.example.java_hotel_system.view.bottomNav.room_detail.RoomDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,16 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
         holder.tvLokasi.setText(listItems.get(position).getKota());
         holder.tvRating.setText(listItems.get(position).getRating());
         Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).into(holder.ivKamar);
+
+        // INTENT
+        holder.cvHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), RoomDetailActivity.class);
+                i.putExtra("name", listItems.get(holder.getAdapterPosition()).getNama());
+                holder.cvHotel.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -50,6 +64,7 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvRating, tvLokasi;
         ImageView ivKamar;
+        CardView cvHotel;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +73,7 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
             tvRating = itemView.findViewById(R.id.tvRating);
             tvLokasi = itemView.findViewById(R.id.tvLokasi);
             ivKamar = itemView.findViewById(R.id.ivKamar);
+            cvHotel = itemView.findViewById(R.id.cvHotel);
         }
     }
 

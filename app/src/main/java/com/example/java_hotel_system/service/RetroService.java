@@ -22,4 +22,7 @@ public interface RetroService {
 
     @GET("search_kamar.php")
     Call<KamarList> getSearchKamar(@Query("name") String name);
+
+    @GET("select_by_city.php")
+    Call<KamarList> getByCityKamar(@Query("name") String city);
 }

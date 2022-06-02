@@ -1,5 +1,6 @@
 package com.example.java_hotel_system.view.bottomNav.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,11 +23,13 @@ import android.widget.Toast;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.adapter.RecyclerViewHorizontal;
 import com.example.java_hotel_system.model.kamar.Kamar;
+import com.example.java_hotel_system.view.bottomNav.home.byCity.GetByCityActivity;
 import com.example.java_hotel_system.view_model.HomeViewModel;
 
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
@@ -38,6 +41,8 @@ public class HomeFragment extends Fragment {
     //
     private ImageView ivNoResult;
     private TextView tvNoResult;
+
+    private CircleImageView civJogja, civBandung, civJakarta, civSurabaya, civBali;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,13 @@ public class HomeFragment extends Fragment {
         ivNoResult = view.findViewById(R.id.ivNoResult);
         tvNoResult = view.findViewById(R.id.tvNoResult);
 
+        // FILTER BY CITY
+        civJogja = view.findViewById(R.id.profile_image6);
+        civBandung = view.findViewById(R.id.profile_image5);
+        civJakarta = view.findViewById(R.id.profile_image2);
+        civSurabaya = view.findViewById(R.id.profile_image3);
+        civBali = view.findViewById(R.id.profile_image4);
+
         //
         initSearchBook();
         initRecyclerViewSearchRoom(view);
@@ -68,6 +80,56 @@ public class HomeFragment extends Fragment {
         // get trending room
         initRecyclerViewTrendingRoom(view);
         getTrendingHotel();
+
+        civJogja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = "Jogja";
+                Intent i = new Intent(getActivity(), GetByCityActivity.class);
+                i.putExtra("city", city);
+                startActivity(i);
+            }
+        });
+
+        civBandung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = "Bandung";
+                Intent i = new Intent(getActivity(), GetByCityActivity.class);
+                i.putExtra("city", city);
+                startActivity(i);
+            }
+        });
+
+        civJakarta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = "Jakarta";
+                Intent i = new Intent(getActivity(), GetByCityActivity.class);
+                i.putExtra("city", city);
+                startActivity(i);
+            }
+        });
+
+        civBali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = "Bali";
+                Intent i = new Intent(getActivity(), GetByCityActivity.class);
+                i.putExtra("city", city);
+                startActivity(i);
+            }
+        });
+
+        civSurabaya.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = "Surabaya";
+                Intent i = new Intent(getActivity(), GetByCityActivity.class);
+                i.putExtra("city", city);
+                startActivity(i);
+            }
+        });
 
         return view;
     }
