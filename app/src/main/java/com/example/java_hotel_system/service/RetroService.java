@@ -1,5 +1,6 @@
 package com.example.java_hotel_system.service;
 
+import com.example.java_hotel_system.model.booking.PostBookingRequest;
 import com.example.java_hotel_system.model.kamar.KamarList;
 import com.example.java_hotel_system.model.user.PostUserRequest;
 import com.example.java_hotel_system.model.user.PostUserResponse;
@@ -13,6 +14,9 @@ import retrofit2.http.Query;
 public interface RetroService {
     @POST("insert_user.php")
     Call<PostUserRequest> postUserByLogin(@Body PostUserRequest postUserRequest);
+
+    @POST("insert_booking.php")
+    Call<PostBookingRequest> postBooking(@Body PostBookingRequest postBookingRequest);
 
     @GET("select.php")
     Call<KamarList> getALlHotel();

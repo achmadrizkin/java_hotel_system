@@ -47,6 +47,7 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), RoomDetailActivity.class);
                 i.putExtra("name", listItems.get(holder.getAdapterPosition()).getNama());
+                i.putExtra("kd_kamar", listItems.get(holder.getAdapterPosition()).getKd_kamar());
                 i.putExtra("image_url", listItems.get(holder.getAdapterPosition()).getImage_url());
                 i.putExtra("rating", listItems.get(holder.getAdapterPosition()).getRating());
                 i.putExtra("kota", listItems.get(holder.getAdapterPosition()).getKota());
