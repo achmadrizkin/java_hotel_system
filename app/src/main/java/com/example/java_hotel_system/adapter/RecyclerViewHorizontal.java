@@ -1,5 +1,6 @@
 package com.example.java_hotel_system.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHorizontal.MyViewHolder> {
-    private List<Kamar> listItems;
+    private ArrayList<Kamar> listItems;
+    private Context context;
 
-    public void setListDataItems(List<Kamar> listItems) {
+    public void setListDataItems(ArrayList<Kamar> listItems) {
         this.listItems = listItems;
+    }
+
+    public RecyclerViewHorizontal(Context context) {
+        this.context = context;
     }
 
     @NonNull

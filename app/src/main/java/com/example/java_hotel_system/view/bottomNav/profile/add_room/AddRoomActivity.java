@@ -60,7 +60,7 @@ public class AddRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UUID uuid = UUID.randomUUID();
-                Kamar kmr = new Kamar(etNamaKamar.getText().toString(), etUrlGambar.getText().toString(), etRating.getText().toString(), etHarga.getText().toString(), etLokasi.getText().toString(), etDeskripsi.getText().toString(), etJmlhKasur.getText().toString(), etJmlhRuangan.getText().toString(), etKota.getText().toString(), uuid.toString());
+                Kamar kmr = new Kamar(etNamaKamar.getText().toString().toLowerCase(), etUrlGambar.getText().toString(), etRating.getText().toString(), etHarga.getText().toString(), etLokasi.getText().toString(), etDeskripsi.getText().toString(), etJmlhKasur.getText().toString(), etJmlhRuangan.getText().toString(), etKota.getText().toString().toLowerCase(), uuid.toString());
                 dao.addKamar(kmr).addOnSuccessListener(suc -> {
                     Toast.makeText(AddRoomActivity.this, "Insert Data Success", Toast.LENGTH_LONG).show();
                     finish();

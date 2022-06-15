@@ -3,6 +3,7 @@ package com.example.java_hotel_system.view.bottomNav.home;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -22,8 +23,14 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.adapter.RecyclerViewHorizontal;
+import com.example.java_hotel_system.dao.DaoKamar;
+import com.example.java_hotel_system.model.kamar.Kamar;
 import com.example.java_hotel_system.view.bottomNav.home.byCity.GetByCityActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -39,6 +46,10 @@ public class HomeFragment extends Fragment {
     //
     private ImageView ivNoResult;
     private TextView tvNoResult;
+
+    String query = "";
+
+    DaoKamar dao;
 
     private CircleImageView civJogja, civBandung, civJakarta, civSurabaya, civBali;
 
@@ -68,14 +79,14 @@ public class HomeFragment extends Fragment {
         civBali = view.findViewById(R.id.profile_image4);
 
         //
+        dao = new DaoKamar();
+
         initSearchBook();
+
+        initRecyclerViewAllRoom(view);
         initRecyclerViewSearchRoom(view);
 
-        // get all room
-        initRecyclerViewAllRoom(view);
-
-        // get trending room
-        initRecyclerViewTrendingRoom(view);
+        getAllRoom();
 
         civJogja.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +150,16 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                query = charSequence.toString();
+                getSearchRoom(charSequence.toString());
 
+                if (query.isEmpty()) {
+                    clHome.setVisibility(View.VISIBLE);
+                    rcyclerHome.setVisibility(View.GONE);
+                } else {
+                    clHome.setVisibility(View.GONE);
+                    rcyclerHome.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -149,16 +169,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void initRecyclerViewSearchRoom(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.rcyclerHome);
-        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerViewAdapterSearchRoom = new RecyclerViewHorizontal();
-        recyclerView.setAdapter(recyclerViewAdapterSearchRoom);
-    }
-
     private void initRecyclerViewAllRoom(View view) {
-        recyclerViewAdapterAllRoom = new RecyclerViewHorizontal();
+        recyclerViewAdapterAllRoom = new RecyclerViewHorizontal(getActivity());
         RecyclerView rvAllRoom = view.findViewById(R.id.rvAllRoom);
 
         //
@@ -167,14 +179,72 @@ public class HomeFragment extends Fragment {
         rvAllRoom.setAdapter(recyclerViewAdapterAllRoom);
     }
 
-    private void initRecyclerViewTrendingRoom(View view) {
-        recyclerViewAdapterTrendingRoom = new RecyclerViewHorizontal();
-        RecyclerView rvTrendingRoom = view.findViewById(R.id.rvTrendingRoom);
-
-        //
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        rvTrendingRoom.setLayoutManager(horizontalLayoutManager);
-        rvTrendingRoom.setAdapter(recyclerViewAdapterTrendingRoom);
+    private void initRecyclerViewSearchRoom(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.rcyclerHome);
+        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerViewAdapterSearchRoom = new RecyclerViewHorizontal(getActivity());
+        recyclerView.setAdapter(recyclerViewAdapterSearchRoom);
     }
 
+    private void getAllRoom() {
+        dao.getAll().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Kamar> kamar = new ArrayList<>();
+
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    Kamar kmr = data.getValue(Kamar.class);
+                    kamar.add(kmr);
+                }
+
+                recyclerViewAdapterAllRoom.setListDataItems(kamar);
+                recyclerViewAdapterAllRoom.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // NULL DATA
+            }
+        });
+    }
+
+    private void getSearchRoom(String kamar) {
+        dao.searchKamar(kamar).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Kamar> kamar = new ArrayList<>();
+
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    Kamar kmr = data.getValue(Kamar.class);
+                    kamar.add(kmr);
+                }
+
+                // check if data was null (empty)
+                if (kamar.isEmpty() || kamar.get(0).getNama().isEmpty()) {
+                    noData();
+                } else {
+                    data();
+                }
+
+                recyclerViewAdapterSearchRoom.setListDataItems(kamar);
+                recyclerViewAdapterSearchRoom.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void noData() {
+        ivNoResult.setVisibility(View.VISIBLE);
+        tvNoResult.setVisibility(View.VISIBLE);
+    }
+
+    private void data() {
+        ivNoResult.setVisibility(View.GONE);
+        tvNoResult.setVisibility(View.GONE);
+    }
 }

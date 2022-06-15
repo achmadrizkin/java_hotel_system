@@ -43,8 +43,6 @@ public class GetByCityActivity extends AppCompatActivity {
 
 
         //
-        initRecyclerViewGetByCityRoom();
-
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,15 +50,4 @@ public class GetByCityActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initRecyclerViewGetByCityRoom() {
-        recyclerViewAdapterGetByCityRoom = new RecyclerViewHorizontal();
-        rvByCity = findViewById(R.id.rvByCity);
-
-        RecyclerView.LayoutManager mLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getApplicationContext(), 2);
-        rvByCity.setLayoutManager(mLayoutManager);
-        recyclerViewAdapterGetByCityRoom = new RecyclerViewHorizontal();
-        rvByCity.setAdapter(recyclerViewAdapterGetByCityRoom);
-    }
-
 }

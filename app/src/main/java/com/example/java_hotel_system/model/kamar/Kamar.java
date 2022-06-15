@@ -25,6 +25,9 @@ public class Kamar {
         this.kd_kamar = kd_kamar;
     }
 
+    public Kamar() {
+    }
+
     public String getNama() {
         return nama;
     }
