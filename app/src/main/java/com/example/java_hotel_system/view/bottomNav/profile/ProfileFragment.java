@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
-import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.info_app.InfoAppActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.map.GetLocationMap;
 import com.example.java_hotel_system.view.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +30,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvDisplayName, tvEmail;
 
     private ConstraintLayout clLogin, clNotLogin;
-    private Button btnToLogin;
+    private Button btnToLogin, btnInfoApp, btnAddRoom;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class ProfileFragment extends Fragment {
 
         btnToLogin = view.findViewById(R.id.btnToLogin);
         btnSignOut = view.findViewById(R.id.btnLogOut);
+        btnInfoApp = view.findViewById(R.id.btnInfoApp);
+        btnAddRoom = view.findViewById(R.id.btnAddRoom);
 
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
@@ -85,6 +89,20 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
+
+        btnAddRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), GetLocationMap.class));
+            }
+        });
+
+        btnInfoApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), InfoAppActivity.class));
             }
         });
 

@@ -16,11 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
-import com.example.java_hotel_system.model.user.PostUserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
 import com.example.java_hotel_system.view.login.github.GithubAuth;
-import com.example.java_hotel_system.view_model.LoginViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -48,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     private int RC_SIGN_IN = 1;
 
     //
-    private LoginViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("606600641805-6cmtbgdohp7ciipnfvmcea90ic8ehshs.apps.googleusercontent.com")
                 .requestEmail()
@@ -138,40 +133,10 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Success Sign In", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
                     finish();
-
-                    // POST IF USER FIRST TIME LOGIN
-                    // IF USER ALREADY LOGIN, it just update
-                    if (mAuth.getCurrentUser() != null) {
-                        PostUserRequest a = new PostUserRequest(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid(), mAuth.getCurrentUser().getPhotoUrl().toString(), "GOOGLE");
-                        postUserByLoginFromApiCall(a);
-                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Sign In", Toast.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    private void postUserByLoginFromApiCall(PostUserRequest postUserRequest) {
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        viewModel.postUserByLoginObservable().observe(LoginActivity.this, new Observer<PostUserRequest>() {
-            @Override
-            public void onChanged(PostUserRequest recyclerData) {
-                if (recyclerData == null) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Failed to create/update new user",
-                            Toast.LENGTH_LONG
-                    ).show();
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Success to create/update new user",
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            }
-        });
-        viewModel.postUserByLoginOfData(postUserRequest);
     }
 }

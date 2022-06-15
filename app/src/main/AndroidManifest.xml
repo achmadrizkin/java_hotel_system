@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.java_hotel_system">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:remove="29"/>
+
 
     <application
         android:name=".MyApplication"
@@ -14,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Java_hotel_system"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.bottomNav.profile.map.GetLocationMap"
+            android:exported="false" />
+        <activity
+            android:name=".view.bottomNav.profile.add_room.AddRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.bottomNav.profile.info_app.InfoAppActivity"
+            android:exported="false" />
         <activity
             android:name=".view.bottomNav.room_detail.payment.PaymentSuccessActivity"
             android:exported="false" />

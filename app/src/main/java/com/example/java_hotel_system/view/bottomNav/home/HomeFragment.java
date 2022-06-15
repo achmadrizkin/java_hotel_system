@@ -22,9 +22,7 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.adapter.RecyclerViewHorizontal;
-import com.example.java_hotel_system.model.kamar.Kamar;
 import com.example.java_hotel_system.view.bottomNav.home.byCity.GetByCityActivity;
-import com.example.java_hotel_system.view_model.HomeViewModel;
 
 import java.util.List;
 
@@ -75,11 +73,9 @@ public class HomeFragment extends Fragment {
 
         // get all room
         initRecyclerViewAllRoom(view);
-        getAllHotel();
 
         // get trending room
         initRecyclerViewTrendingRoom(view);
-        getTrendingHotel();
 
         civJogja.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +139,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                makeApiCall(charSequence.toString());
+
             }
 
             @Override
@@ -151,42 +147,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
-
-    private void makeApiCall(String nama) {
-        HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel.getSearchHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
-            @Override
-            public void onChanged(List<Kamar> recyclerData) {
-                if (recyclerData != null) {
-                    // berhasil
-                    recyclerViewAdapterSearchRoom.setListDataItems(recyclerData);
-                    recyclerViewAdapterSearchRoom.notifyDataSetChanged();
-
-                    clHome.setVisibility(View.GONE);
-                    rcyclerHome.setVisibility(View.VISIBLE);
-
-                    ivNoResult.setVisibility(View.GONE);
-                    tvNoResult.setVisibility(View.GONE);
-                } else {
-                    clHome.setVisibility(View.GONE);
-                    rcyclerHome.setVisibility(View.GONE);
-
-                    // IF DATA NULL
-                    ivNoResult.setVisibility(View.VISIBLE);
-                    tvNoResult.setVisibility(View.VISIBLE);
-                }
-
-                if (nama.isEmpty() || nama == "") {
-                    clHome.setVisibility(View.VISIBLE);
-                    rcyclerHome.setVisibility(View.GONE);
-
-                    ivNoResult.setVisibility(View.GONE);
-                    tvNoResult.setVisibility(View.GONE);
-                }
-            }
-        });
-        viewModel.getSearchHotelOfData(nama);
     }
 
     private void initRecyclerViewSearchRoom(View view) {
@@ -217,35 +177,4 @@ public class HomeFragment extends Fragment {
         rvTrendingRoom.setAdapter(recyclerViewAdapterTrendingRoom);
     }
 
-    private void getAllHotel() {
-        HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel.getALlHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
-            @Override
-            public void onChanged(List<Kamar> recyclerData) {
-                if (recyclerData != null) {
-                    recyclerViewAdapterAllRoom.setListDataItems(recyclerData);
-                    recyclerViewAdapterAllRoom.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        viewModel.getALlHotelOfData();
-    }
-
-    private void getTrendingHotel() {
-        HomeViewModel viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel.getTrendingHotelObservable().observe(getActivity(), new Observer<List<Kamar>>() {
-            @Override
-            public void onChanged(List<Kamar> recyclerData) {
-                if (recyclerData != null) {
-                    recyclerViewAdapterTrendingRoom.setListDataItems(recyclerData);
-                    recyclerViewAdapterTrendingRoom.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getActivity(), "Error in getting data", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        viewModel.getTrendingHotelOfData();
-    }
 }

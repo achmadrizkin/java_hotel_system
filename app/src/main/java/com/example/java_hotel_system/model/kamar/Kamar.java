@@ -1,7 +1,6 @@
 package com.example.java_hotel_system.model.kamar;
 
 public class Kamar {
-    private String id;
     private String nama;
     private String kd_kamar;
     private String image_url;
@@ -12,10 +11,8 @@ public class Kamar {
     private String deskripsi;
     private String jmlh_kasur;
     private String jmlh_ruangan;
-    private String status_kamar;
 
-    public Kamar(String id, String nama, String image_url, String rating, String harga, String lokasi, String deskripsi, String jmlh_kasur, String jmlh_ruangan, String status_kamar, String kota, String kd_kamar) {
-        this.id = id;
+    public Kamar(String nama, String image_url, String rating, String harga, String lokasi, String deskripsi, String jmlh_kasur, String jmlh_ruangan, String kota, String kd_kamar) {
         this.nama = nama;
         this.image_url = image_url;
         this.rating = rating;
@@ -25,16 +22,7 @@ public class Kamar {
         this.deskripsi = deskripsi;
         this.jmlh_kasur = jmlh_kasur;
         this.jmlh_ruangan = jmlh_ruangan;
-        this.status_kamar = status_kamar;
         this.kd_kamar = kd_kamar;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNama() {
@@ -99,14 +87,6 @@ public class Kamar {
 
     public void setJmlh_ruangan(String jmlh_ruangan) {
         this.jmlh_ruangan = jmlh_ruangan;
-    }
-
-    public String getStatus_kamar() {
-        return status_kamar;
-    }
-
-    public void setStatus_kamar(String status_kamar) {
-        this.status_kamar = status_kamar;
     }
 
     public String getKota() {

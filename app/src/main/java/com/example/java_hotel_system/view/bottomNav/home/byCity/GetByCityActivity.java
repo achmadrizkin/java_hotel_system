@@ -16,10 +16,7 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.adapter.RecyclerViewHorizontal;
-import com.example.java_hotel_system.model.kamar.Kamar;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
-import com.example.java_hotel_system.view_model.GetByCityViewModel;
-import com.example.java_hotel_system.view_model.HomeViewModel;
 
 import java.util.List;
 
@@ -47,7 +44,6 @@ public class GetByCityActivity extends AppCompatActivity {
 
         //
         initRecyclerViewGetByCityRoom();
-        getByCityRoom(city);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,23 +63,4 @@ public class GetByCityActivity extends AppCompatActivity {
         rvByCity.setAdapter(recyclerViewAdapterGetByCityRoom);
     }
 
-    private void getByCityRoom(String city) {
-        GetByCityViewModel viewModel = new ViewModelProvider(this).get(GetByCityViewModel.class);
-        viewModel.getByCityKamarObservable().observe(GetByCityActivity.this, new Observer<List<Kamar>>() {
-            @Override
-            public void onChanged(List<Kamar> recyclerData) {
-                if (recyclerData != null) {
-                    recyclerViewAdapterGetByCityRoom.setListDataItems(recyclerData);
-                    recyclerViewAdapterGetByCityRoom.notifyDataSetChanged();
-
-                    clEmptyRoom.setVisibility(View.GONE);
-                    rvByCity.setVisibility(View.VISIBLE);
-                } else {
-                    clEmptyRoom.setVisibility(View.VISIBLE);
-                    rvByCity.setVisibility(View.GONE);
-                }
-            }
-        });
-        viewModel.getByCityKamarOfData(city);
-    }
 }

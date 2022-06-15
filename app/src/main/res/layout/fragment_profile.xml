@@ -14,13 +14,13 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/btnTopUp"
+            android:id="@+id/btnInfoApp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="Info App"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogOut2" />
+            app:layout_constraintTop_toBottomOf="@+id/btnAddRoom" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnOffers" />
 
         <Button
-            android:id="@+id/btnLogOut2"
+            android:id="@+id/btnAddRoom"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="248dp"
@@ -87,7 +87,7 @@
             android:text="Offers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTopUp"
+            app:layout_constraintTop_toBottomOf="@+id/btnInfoApp"
             app:layout_constraintVertical_bias="0.303" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

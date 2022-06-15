@@ -18,12 +18,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
-import com.example.java_hotel_system.model.booking.PostBookingRequest;
-import com.example.java_hotel_system.model.user.PostUserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.payment.PaymentSuccessActivity;
-import com.example.java_hotel_system.view_model.RoomDetailViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
@@ -40,7 +37,6 @@ public class RoomDetailActivity extends AppCompatActivity {
     EditText etCheckIn, etCheckOut;
 
     //
-    private RoomDetailViewModel viewModel;
     private FirebaseAuth mAuth;
 
     @Override
@@ -74,7 +70,6 @@ public class RoomDetailActivity extends AppCompatActivity {
         etCheckOut = findViewById(R.id.editTextDate3);
         tvNotLogin = findViewById(R.id.tvNotLogin);
 
-        viewModel = new ViewModelProvider(this).get(RoomDetailViewModel.class);
         mAuth = FirebaseAuth.getInstance();
 
         // SET
@@ -134,38 +129,10 @@ public class RoomDetailActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG
                     ).show();
                 } else {
-                    String uniqueID = UUID.randomUUID().toString();
-                    PostBookingRequest b = new PostBookingRequest(uniqueID, mAuth.getUid(), kd_kamar, checkOut, checkIn);
 
-                    postBooking(b);
                 }
             }
         });
     }
 
-    private void postBooking(PostBookingRequest postBookingRequest) {
-        viewModel = new ViewModelProvider(this).get(RoomDetailViewModel.class);
-        viewModel.postBookingObservable().observe(RoomDetailActivity.this, new Observer<PostBookingRequest>() {
-            @Override
-            public void onChanged(PostBookingRequest recyclerData) {
-                if (recyclerData == null) {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Failed to booking room",
-                            Toast.LENGTH_LONG
-                    ).show();
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Success to booking room",
-                            Toast.LENGTH_LONG
-                    ).show();
-
-                    startActivity(new Intent(getApplicationContext(), PaymentSuccessActivity.class));
-                    finish();
-                }
-            }
-        });
-        viewModel.postBookingOfData(postBookingRequest);
-    }
 }
