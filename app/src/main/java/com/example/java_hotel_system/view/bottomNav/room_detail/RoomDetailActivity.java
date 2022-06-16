@@ -112,7 +112,19 @@ public class RoomDetailActivity extends AppCompatActivity {
         ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), EditRoomActivity.class));
+                Intent i = new Intent(view.getContext(), EditRoomActivity.class);
+                i.putExtra("key", key);
+                i.putExtra("name", name);
+                i.putExtra("kd_kamar", kd_kamar);
+                i.putExtra("image_url", image_url);
+                i.putExtra("rating", rating);
+                i.putExtra("kota", kota);
+                i.putExtra("deskripsi", deskripsi);
+                i.putExtra("jmlh_ruangan", jmlh_ruangan);
+                i.putExtra("jmlh_kasur", jmlh_kasur);
+                i.putExtra("location", location);
+                i.putExtra("harga", harga);
+                startActivity(i);
             }
         });
 

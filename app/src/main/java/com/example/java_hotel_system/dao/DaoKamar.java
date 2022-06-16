@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.HashMap;
+
 public class DaoKamar {
     private DatabaseReference databaseReference;
 
@@ -37,5 +39,9 @@ public class DaoKamar {
 
     public Task<Void> remove(String key) {
         return databaseReference.child(key).removeValue();
+    }
+
+    public Task<Void> update(String key, HashMap<String ,Object> hashMap) {
+        return databaseReference.child(key).updateChildren(hashMap);
     }
 }
