@@ -1,6 +1,13 @@
 package com.example.java_hotel_system.model.kamar;
 
+import com.google.firebase.database.Exclude;
+
 public class Kamar {
+
+    // get key
+    @Exclude
+    private String key;
+
     private String nama;
     private String kd_kamar;
     private String image_url;
@@ -106,5 +113,13 @@ public class Kamar {
 
     public void setKd_kamar(String kd_kamar) {
         this.kd_kamar = kd_kamar;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

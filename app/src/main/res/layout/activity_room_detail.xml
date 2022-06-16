@@ -54,7 +54,7 @@
                 app:srcCompat="@drawable/ic_edit" />
 
             <ImageView
-                android:id="@+id/ivDelete2"
+                android:id="@+id/ivDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -93,6 +93,21 @@
                 android:text="OYO 7653 VIP ROOM"
                 android:textColor="@color/black"
                 android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivPhotoRoom"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tvURL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="SSSSSSSSSSSSSs"
+                android:textColor="@color/white"
+                android:textSize="5sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivPhotoRoom"
@@ -143,14 +158,13 @@
                 android:layout_marginStart="8dp"
 
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="8dp"
                 android:fontFamily="sans-serif-light"
                 android:justificationMode="inter_word"
+                android:padding="10dp"
                 android:text="Hotel Bener Jogja merupkan sebuah hotel Melati yang terletak di pusat kota Jogja dengan jarak tempuh hanya kurang lebih  5-10 menit dari dan menuju Trademark kota Jogja yaitu Malioboro.
 Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan dengan fasilisas yang tentunya akan membuat nyaman anda selama menginap di hotel Bener"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
@@ -307,7 +321,7 @@ Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan
                 app:layout_constraintTop_toBottomOf="@+id/tvRoom" />
 
             <TextView
-                android:id="@+id/textView25"
+                android:id="@+id/tvHarga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -329,7 +343,7 @@ Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan
                 android:text="Open Maps"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+                app:layout_constraintTop_toBottomOf="@+id/tvHarga" />
 
             <TextView
                 android:visibility="gone"

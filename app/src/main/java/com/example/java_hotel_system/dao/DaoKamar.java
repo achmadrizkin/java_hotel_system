@@ -26,4 +26,16 @@ public class DaoKamar {
     public Query searchKamar(String kamar) {
         return databaseReference.orderByChild("nama").startAt(kamar).endAt(kamar+ "~");
     }
+
+    public Query getByHarga() {
+        return databaseReference.orderByChild("harga").startAt("100").endAt("100" + "~");
+    }
+
+    public Query getByKota(String kotaKamar) {
+        return databaseReference.orderByChild("kota").startAt(kotaKamar).endAt(kotaKamar + "~");
+    }
+
+    public Task<Void> remove(String key) {
+        return databaseReference.child(key).removeValue();
+    }
 }

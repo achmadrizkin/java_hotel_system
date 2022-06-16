@@ -45,13 +45,14 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
         holder.tvNama.setText(listItems.get(position).getNama());
         holder.tvLokasi.setText(listItems.get(position).getKota());
         holder.tvRating.setText(listItems.get(position).getRating());
-        Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).into(holder.ivKamar);
+        Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).placeholder(R.drawable.erorr_picture).into(holder.ivKamar);
 
         // INTENT
         holder.cvHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), RoomDetailActivity.class);
+                i.putExtra("key", listItems.get(holder.getAdapterPosition()).getKey());
                 i.putExtra("name", listItems.get(holder.getAdapterPosition()).getNama());
                 i.putExtra("kd_kamar", listItems.get(holder.getAdapterPosition()).getKd_kamar());
                 i.putExtra("image_url", listItems.get(holder.getAdapterPosition()).getImage_url());
@@ -61,6 +62,7 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
                 i.putExtra("jmlh_ruangan", listItems.get(holder.getAdapterPosition()).getJmlh_ruangan());
                 i.putExtra("jmlh_kasur", listItems.get(holder.getAdapterPosition()).getJmlh_kasur());
                 i.putExtra("location", listItems.get(holder.getAdapterPosition()).getLokasi());
+                i.putExtra("harga", listItems.get(holder.getAdapterPosition()).getHarga());
                 holder.cvHotel.getContext().startActivity(i);
             }
         });

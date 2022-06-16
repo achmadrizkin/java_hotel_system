@@ -48,6 +48,9 @@ public class AddRoomActivity extends AppCompatActivity {
         etJmlhRuangan = findViewById(R.id.etJmlhRuangan);
 
         etLokasi.setText(location);
+        etLokasi.setTextIsSelectable(true);
+
+
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +63,34 @@ public class AddRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UUID uuid = UUID.randomUUID();
-                Kamar kmr = new Kamar(etNamaKamar.getText().toString().toLowerCase(), etUrlGambar.getText().toString(), etRating.getText().toString(), etHarga.getText().toString(), etLokasi.getText().toString(), etDeskripsi.getText().toString(), etJmlhKasur.getText().toString(), etJmlhRuangan.getText().toString(), etKota.getText().toString().toLowerCase(), uuid.toString());
-                dao.addKamar(kmr).addOnSuccessListener(suc -> {
-                    Toast.makeText(AddRoomActivity.this, "Insert Data Success", Toast.LENGTH_LONG).show();
-                    finish();
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(AddRoomActivity.this, "Insert Data ERROR: " + er.getMessage(), Toast.LENGTH_LONG).show();
-                });
+
+                // validate first
+                if (etNamaKamar.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "NAMA KAMAR Cannot NULL", Toast.LENGTH_LONG).show();
+                } else if (etUrlGambar.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "LINK URL Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etRating.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Rating Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etHarga.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Harga Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etDeskripsi.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Deskripsi Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etJmlhKasur.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Jmlh Kasur Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etJmlhRuangan.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Jmlh Ruangan Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etKota.getText().toString().isEmpty()) {
+                    Toast.makeText(AddRoomActivity.this, "Kota Cannot NULL: ", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Kamar kmr = new Kamar(etNamaKamar.getText().toString().toLowerCase(), etUrlGambar.getText().toString(), etRating.getText().toString(), etHarga.getText().toString(), etLokasi.getText().toString(), etDeskripsi.getText().toString(), etJmlhKasur.getText().toString(), etJmlhRuangan.getText().toString(), etKota.getText().toString().toLowerCase(), uuid.toString());
+                    dao.addKamar(kmr).addOnSuccessListener(suc -> {
+                        Toast.makeText(AddRoomActivity.this, "Insert Data Success", Toast.LENGTH_LONG).show();
+                        finish();
+                    }).addOnFailureListener(er -> {
+                        Toast.makeText(AddRoomActivity.this, "Insert Data ERROR: " + er.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+                }
             }
         });
     }

@@ -85,13 +85,15 @@ public class HomeFragment extends Fragment {
 
         initRecyclerViewAllRoom(view);
         initRecyclerViewSearchRoom(view);
+        initRecyclerViewTrendingRoom(view);
 
         getAllRoom();
+        getKotaRoom();
 
         civJogja.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = "Jogja";
+                String city = "jogja";
                 Intent i = new Intent(getActivity(), GetByCityActivity.class);
                 i.putExtra("city", city);
                 startActivity(i);
@@ -101,7 +103,7 @@ public class HomeFragment extends Fragment {
         civBandung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = "Bandung";
+                String city = "bandung";
                 Intent i = new Intent(getActivity(), GetByCityActivity.class);
                 i.putExtra("city", city);
                 startActivity(i);
@@ -111,7 +113,7 @@ public class HomeFragment extends Fragment {
         civJakarta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = "Jakarta";
+                String city = "jakarta";
                 Intent i = new Intent(getActivity(), GetByCityActivity.class);
                 i.putExtra("city", city);
                 startActivity(i);
@@ -121,7 +123,7 @@ public class HomeFragment extends Fragment {
         civBali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = "Bali";
+                String city = "bali";
                 Intent i = new Intent(getActivity(), GetByCityActivity.class);
                 i.putExtra("city", city);
                 startActivity(i);
@@ -131,7 +133,7 @@ public class HomeFragment extends Fragment {
         civSurabaya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = "Surabaya";
+                String city = "surabaya";
                 Intent i = new Intent(getActivity(), GetByCityActivity.class);
                 i.putExtra("city", city);
                 startActivity(i);
@@ -187,6 +189,16 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapterSearchRoom);
     }
 
+    private void initRecyclerViewTrendingRoom(View view) {
+        recyclerViewAdapterTrendingRoom = new RecyclerViewHorizontal(getActivity());
+        RecyclerView rvTrendingRoom = view.findViewById(R.id.rvTrendingRoom);
+
+        //
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvTrendingRoom.setLayoutManager(horizontalLayoutManager);
+        rvTrendingRoom.setAdapter(recyclerViewAdapterTrendingRoom);
+    }
+
     private void getAllRoom() {
         dao.getAll().addValueEventListener(new ValueEventListener() {
             @Override
@@ -195,11 +207,35 @@ public class HomeFragment extends Fragment {
 
                 for (DataSnapshot data: snapshot.getChildren()) {
                     Kamar kmr = data.getValue(Kamar.class);
+                    kmr.setKey(data.getKey());
                     kamar.add(kmr);
                 }
 
                 recyclerViewAdapterAllRoom.setListDataItems(kamar);
                 recyclerViewAdapterAllRoom.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // NULL DATA
+            }
+        });
+    }
+
+    private void getKotaRoom() {
+        dao.getByHarga().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Kamar> kamar = new ArrayList<>();
+
+                for (DataSnapshot data: snapshot.getChildren()) {
+                    Kamar kmr = data.getValue(Kamar.class);
+                    kmr.setKey(data.getKey());
+                    kamar.add(kmr);
+                }
+
+                recyclerViewAdapterTrendingRoom.setListDataItems(kamar);
+                recyclerViewAdapterTrendingRoom.notifyDataSetChanged();
             }
 
             @Override
@@ -217,6 +253,7 @@ public class HomeFragment extends Fragment {
 
                 for (DataSnapshot data: snapshot.getChildren()) {
                     Kamar kmr = data.getValue(Kamar.class);
+                    kmr.setKey(data.getKey());
                     kamar.add(kmr);
                 }
 
