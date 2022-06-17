@@ -5,10 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:remove="29"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MyApplication"
@@ -19,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Java_hotel_system"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.bottomNav.profile.qr_details.QrDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.bottomNav.booking.show_qr.ShowQrActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.bottomNav.booking.booking_details.BookingDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".view.bottomNav.profile.map.GetLocationMap"
             android:exported="false" />

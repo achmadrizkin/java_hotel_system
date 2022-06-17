@@ -8,7 +8,6 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvHotel"
         app:cardCornerRadius="25dp"
-        app:cardElevation="15dp"
         app:cardBackgroundColor="@color/white"
         android:layout_width="180dp"
         android:layout_margin="5dp"

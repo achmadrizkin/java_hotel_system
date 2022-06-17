@@ -1,11 +1,18 @@
 package com.example.java_hotel_system.view.bottomNav.profile;
 
+import static android.content.ContentValues.TAG;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +20,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blikoon.qrcodescanner.QrCodeActivity;
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.info_app.InfoAppActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.map.GetLocationMap;
+import com.example.java_hotel_system.view.bottomNav.profile.qr_details.QrDetailsActivity;
 import com.example.java_hotel_system.view.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 
 public class ProfileFragment extends Fragment {
@@ -31,6 +46,9 @@ public class ProfileFragment extends Fragment {
 
     private ConstraintLayout clLogin, clNotLogin;
     private Button btnToLogin, btnInfoApp, btnAddRoom;
+
+    private Button btnScanQR;
+    private static final int REQUEST_CODE_QR_SCAN = 101;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +72,7 @@ public class ProfileFragment extends Fragment {
         btnSignOut = view.findViewById(R.id.btnLogOut);
         btnInfoApp = view.findViewById(R.id.btnInfoApp);
         btnAddRoom = view.findViewById(R.id.btnAddRoom);
+        btnScanQR = view.findViewById(R.id.btnScanQR);
 
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
@@ -106,6 +125,88 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        btnScanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                permissionHandler();
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != Activity.RESULT_OK) {
+            Log.d(TAG,"COULD NOT GET A GOOD RESULT.");
+            if(data==null)
+                return;
+
+            //Getting the passed result
+            String result = data.getStringExtra("com.blikoon.qrcodescanner.error_decoding_image");
+            if( result!=null)
+            {
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle("Scan Error");
+                alertDialog.setMessage("QR Code could not be scanned");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+            return;
+        }
+
+        // QR CODE SUCCESS
+        //TODO: PASS THIS TO NEW ACTIVITY
+        if(requestCode == REQUEST_CODE_QR_SCAN) {
+            if(data==null)
+                return;
+
+            //Getting the passed result
+            String result = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
+//            Log.d(TAG,"Have scan result in your app activity :"+ result);
+//            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+//            alertDialog.setTitle("Scan result");
+//            alertDialog.setMessage(result);
+//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            alertDialog.show();
+
+            // intent
+            Intent p = new Intent(getActivity(), QrDetailsActivity.class);
+            p.putExtra("result", result);
+            startActivity(p);
+        }
+    }
+
+    private void permissionHandler() {
+        Dexter.withContext(getActivity())
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        Intent i = new Intent(getActivity(), QrCodeActivity.class);
+                        startActivityForResult(i, REQUEST_CODE_QR_SCAN);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        permissionDeniedResponse.getRequestedPermission();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).check();
     }
 }

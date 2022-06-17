@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.dao.DaoKamar;
 import com.example.java_hotel_system.model.kamar.Kamar;
+import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
 
 import java.util.UUID;
 
@@ -86,7 +88,9 @@ public class AddRoomActivity extends AppCompatActivity {
                     Kamar kmr = new Kamar(etNamaKamar.getText().toString().toLowerCase(), etUrlGambar.getText().toString(), etRating.getText().toString(), etHarga.getText().toString(), etLokasi.getText().toString(), etDeskripsi.getText().toString(), etJmlhKasur.getText().toString(), etJmlhRuangan.getText().toString(), etKota.getText().toString().toLowerCase(), uuid.toString());
                     dao.addKamar(kmr).addOnSuccessListener(suc -> {
                         Toast.makeText(AddRoomActivity.this, "Insert Data Success", Toast.LENGTH_LONG).show();
-                        finish();
+
+                        Intent i = new Intent(view.getContext(), BottomNavigationActivity.class);
+                        startActivity(i);
                     }).addOnFailureListener(er -> {
                         Toast.makeText(AddRoomActivity.this, "Insert Data ERROR: " + er.getMessage(), Toast.LENGTH_LONG).show();
                     });

@@ -1,5 +1,6 @@
 package com.example.java_hotel_system.view.bottomNav.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -201,6 +202,7 @@ public class HomeFragment extends Fragment {
 
     private void getAllRoom() {
         dao.getAll().addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Kamar> kamar = new ArrayList<>();
@@ -224,6 +226,7 @@ public class HomeFragment extends Fragment {
 
     private void getKotaRoom() {
         dao.getByHarga().addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Kamar> kamar = new ArrayList<>();
@@ -247,6 +250,7 @@ public class HomeFragment extends Fragment {
 
     private void getSearchRoom(String kamar) {
         dao.searchKamar(kamar).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Kamar> kamar = new ArrayList<>();

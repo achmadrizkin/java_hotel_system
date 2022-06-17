@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
+import com.example.java_hotel_system.dao.DaoBooking;
 import com.example.java_hotel_system.dao.DaoKamar;
+import com.example.java_hotel_system.model.booking.Booking;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
@@ -37,6 +39,8 @@ public class RoomDetailActivity extends AppCompatActivity {
     TextView tvName, tvRating, tvCity, tvDeskripsi, tvBed, tvRoom, tvNotLogin, tvHarga, tvURL;
     Button btnMaps, btnBooking;
     EditText etCheckIn, etCheckOut;
+    DaoBooking dao;
+    DaoKamar daoKamar;
 
     //
     private FirebaseAuth mAuth;
@@ -78,6 +82,15 @@ public class RoomDetailActivity extends AppCompatActivity {
         ivDelete = findViewById(R.id.ivDelete);
 
         mAuth = FirebaseAuth.getInstance();
+
+        //
+        dao = new DaoBooking();
+        daoKamar = new DaoKamar();
+
+        if (mAuth.getCurrentUser() == null) {
+            ivEdit.setVisibility(View.GONE);
+            ivDelete.setVisibility(View.GONE);
+        }
 
         // SET
         tvName.setText(name);
@@ -157,7 +170,23 @@ public class RoomDetailActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG
                     ).show();
                 } else {
+                    UUID uuid = UUID.randomUUID();
 
+                    // BOOKING
+                    Booking booking = new Booking(uuid.toString(), harga, mAuth.getCurrentUser().getUid(), rating, name, kota, etCheckIn.getText().toString(), etCheckOut.getText().toString(), location, image_url);
+                    dao.addBooking(booking).addOnSuccessListener(suc -> {
+                        Toast.makeText(RoomDetailActivity.this, "Booking Berhasil", Toast.LENGTH_LONG).show();
+
+                        // PASS INTENT
+                        Intent i = new Intent(view.getContext(), PaymentSuccessActivity.class);
+                        startActivity(i);
+                        finish();
+
+                        //DELETE DATA AFTER BOOKING
+                        daoKamar.remove(key);
+                    }).addOnFailureListener(er -> {
+                        Toast.makeText(RoomDetailActivity.this, "Booking ERROR: " + er.getMessage(), Toast.LENGTH_LONG).show();
+                    });
                 }
             }
         });

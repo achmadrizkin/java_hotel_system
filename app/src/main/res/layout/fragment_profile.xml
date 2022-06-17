@@ -67,7 +67,7 @@
             android:text="LOGOUT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnOffers" />
+            app:layout_constraintTop_toBottomOf="@+id/btnScanQR" />
 
         <Button
             android:id="@+id/btnAddRoom"
@@ -80,11 +80,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btnOffers"
+            android:id="@+id/btnScanQR"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="52dp"
-            android:text="Offers"
+            android:text="Scan QR"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnInfoApp"
