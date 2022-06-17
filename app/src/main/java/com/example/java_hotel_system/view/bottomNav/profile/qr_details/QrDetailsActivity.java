@@ -28,7 +28,7 @@ public class QrDetailsActivity extends AppCompatActivity {
     private DaoBooking dao;
     private ProgressBar pbLoading;
     private ConstraintLayout clQrCodeSuccess;
-    private TextView tvKodeBooking, tvUserId, tvCheckIn, tvCheckOut;
+    private TextView tvKodeBooking, tvUserId, tvCheckIn, tvCheckOut, tvTotalHarga;
     private Button btnBack;
 
     @Override
@@ -45,6 +45,7 @@ public class QrDetailsActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         tvCheckIn = findViewById(R.id.tvCheckIn);
         tvCheckOut = findViewById(R.id.tvCheckOut);
+        tvTotalHarga = findViewById(R.id.tvTotalHarga);
 
         pbLoading.setVisibility(View.VISIBLE);
         clQrCodeSuccess.setVisibility(View.GONE);
@@ -94,6 +95,7 @@ public class QrDetailsActivity extends AppCompatActivity {
                     tvUserId.setText(bookings.get(0).getUser_buy());
                     tvCheckOut.setText(bookings.get(0).getCheck_out());
                     tvCheckIn.setText(bookings.get(0).getCheck_in());
+                    tvTotalHarga.setText(bookings.get(0).getTotal());
                 } else {
                     clQrCodeSuccess.setVisibility(View.GONE);
                 }

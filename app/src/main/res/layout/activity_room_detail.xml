@@ -312,7 +312,7 @@ Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Total:"
                 android:textColor="@color/black"
@@ -325,7 +325,7 @@ Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="300.000"
                 android:textColor="#FF0000"
@@ -371,6 +371,31 @@ Hotel Bener merupakan Hotel Melati dengan bangunan yang tergolong masih baru dan
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnMaps" />
+
+            <TextView
+                android:id="@+id/tvHari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#FF0000"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@+id/textView200"
+                app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+
+            <TextView
+                android:id="@+id/textView200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Hari: "
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toEndOf="@+id/tvHarga"
+                app:layout_constraintTop_toBottomOf="@+id/imageView23" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

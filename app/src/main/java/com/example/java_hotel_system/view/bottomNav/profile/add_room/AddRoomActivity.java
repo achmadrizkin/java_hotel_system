@@ -2,6 +2,7 @@ package com.example.java_hotel_system.view.bottomNav.profile.add_room;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.java_hotel_system.model.kamar.Kamar;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
 
+import java.util.Calendar;
 import java.util.UUID;
 
 public class AddRoomActivity extends AppCompatActivity {
@@ -51,8 +53,6 @@ public class AddRoomActivity extends AppCompatActivity {
 
         etLokasi.setText(location);
         etLokasi.setTextIsSelectable(true);
-
-
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

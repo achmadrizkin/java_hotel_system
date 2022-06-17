@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.java_hotel_system"
-        minSdk 21
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -67,7 +67,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
     // MAP BOX
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.0.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.0'
     implementation("com.google.android.gms:play-services-location:18.0.0")
 
     //

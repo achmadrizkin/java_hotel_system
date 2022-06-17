@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
-import com.example.java_hotel_system.view.bottomNav.room_detail.RoomDetailActivity;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -21,6 +19,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.maps.Style;
 
 public class GetLocationMap extends AppCompatActivity implements MapboxMap.OnMapClickListener, OnMapReadyCallback {
     private MapView mapView;
@@ -98,7 +97,7 @@ public class GetLocationMap extends AppCompatActivity implements MapboxMap.OnMap
     }
 
     @Override
-    public void onMapClick(@NonNull LatLng point) {
+    public boolean onMapClick(@NonNull LatLng point) {
 
         if (destinationMarker != null) {
             map.removeMarker(destinationMarker);
@@ -113,6 +112,7 @@ public class GetLocationMap extends AppCompatActivity implements MapboxMap.OnMap
         lat = point.getLatitude();
 
         tvLatLng.setText("Long: " + lng + " Lat: " + lat);
+        return false;
     }
 
     @Override
@@ -124,5 +124,6 @@ public class GetLocationMap extends AppCompatActivity implements MapboxMap.OnMap
     public void onMapReady(MapboxMap mapboxMap) {
         map = mapboxMap;
         map.addOnMapClickListener(this);
+        mapboxMap.setStyle(Style.OUTDOORS);
     }
 }
