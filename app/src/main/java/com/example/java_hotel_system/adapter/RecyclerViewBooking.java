@@ -60,6 +60,7 @@ public class RecyclerViewBooking extends RecyclerView.Adapter<RecyclerViewBookin
                 i.putExtra("check_in", listItems.get(holder.getAdapterPosition()).getCheck_in());
                 i.putExtra("check_out", listItems.get(holder.getAdapterPosition()).getCheck_out());
                 i.putExtra("user_buy", listItems.get(holder.getAdapterPosition()).getUser_buy());
+                i.putExtra("total", listItems.get(holder.getAdapterPosition()).getTotal());
 
                 holder.cvHotel.getContext().startActivity(i);
             }

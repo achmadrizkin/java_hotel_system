@@ -106,6 +106,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
+    <Button
+        android:id="@+id/btnPrintPDF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="4dp"
+        android:text="Print PDF"
+        app:layout_constraintBottom_toTopOf="@+id/btnShowQR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnShowQR"
@@ -187,29 +199,5 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/textView27"
         app:layout_constraintTop_toBottomOf="@+id/tvCheckOut" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="26dp"
-        android:text="User Id: "
-        android:textColor="@color/black"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/tvUserId"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:minLines="2"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/tvKdBooking" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
