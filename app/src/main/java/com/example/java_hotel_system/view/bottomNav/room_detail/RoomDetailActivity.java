@@ -38,6 +38,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
@@ -64,6 +65,9 @@ public class RoomDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_detail);
+
+        //
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         Intent intent = getIntent();
         String key = intent.getExtras().getString("key");
@@ -274,7 +278,7 @@ public class RoomDetailActivity extends AppCompatActivity {
                     UUID uuid = UUID.randomUUID();
 
                     // BOOKING
-                    Booking booking = new Booking(uuid.toString(), tvHarga.getText().toString(), mAuth.getCurrentUser().getUid(), rating, name, kota, etCheckIn.getText().toString(), etCheckOut.getText().toString(), location, image_url);
+                    Booking booking = new Booking(uuid.toString(), tvHarga.getText().toString(), mAuth.getCurrentUser().getUid(), rating, name, kota, etCheckIn.getText().toString(), etCheckOut.getText().toString(), location, image_url, currentDate);
                     dao.addBooking(booking).addOnSuccessListener(suc -> {
                         Toast.makeText(RoomDetailActivity.this, "Booking Berhasil", Toast.LENGTH_LONG).show();
 

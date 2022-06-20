@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,8 @@ import com.example.java_hotel_system.adapter.RecyclerViewHorizontal;
 import com.example.java_hotel_system.dao.DaoBooking;
 import com.example.java_hotel_system.model.booking.Booking;
 import com.example.java_hotel_system.model.kamar.Kamar;
+import com.example.java_hotel_system.view.bottomNav.booking.booking_details.BookingDetailsActivity;
+import com.example.java_hotel_system.view.bottomNav.booking.booking_filter.BookingFilter;
 import com.example.java_hotel_system.view.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,17 +33,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 
 public class BookingFragment extends Fragment {
     private ConstraintLayout clLogin, clNotLogin;
-    private Button btnToLogin;
+    private Button btnToLogin, btnPickDate;
     private FirebaseAuth mAuth;
-    DaoBooking dao;
-    private RecyclerView rcyclerViewBooking;
-    private RecyclerViewBooking recyclerViewBooking;
     private TextView textView3, textView4;
+    private CalendarView calendarView;
+    private String date = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,29 +60,53 @@ public class BookingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
         btnToLogin = view.findViewById(R.id.btnToLogin);
         textView3 = view.findViewById(R.id.textView3);
         textView4 = view.findViewById(R.id.textView4);
-        rcyclerViewBooking = view.findViewById(R.id.rcyclerViewBooking);
+        calendarView = view.findViewById(R.id.calendarView);
+        btnPickDate = view.findViewById(R.id.btnPickDate);
 
-        //
-        dao = new DaoBooking();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
             clLogin.setVisibility(View.VISIBLE);
             clNotLogin.setVisibility(View.GONE);
-
-            //
-            getBookingByUserUID(user.getUid());
-            initRecyclerViewTrendingRoom(view);
         } else {
             clNotLogin.setVisibility(View.VISIBLE);
             clLogin.setVisibility(View.GONE);
         }
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                if (i1 > 10) {
+                    date = i2 + "-" + (i1 + 1) + "-" + i;
+                } else {
+                    date = i2 + "-0" + (i1 + 1) + "-" + i;
+                }
+//                tvDate.setText(date);
+            }
+        });
+
+        btnPickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (date == "") {
+                    Intent i = new Intent(view.getContext(), BookingFilter.class);
+                    i.putExtra("current_date", currentDate);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(view.getContext(), BookingFilter.class);
+                    i.putExtra("current_date", date);
+                    startActivity(i);
+                }
+            }
+        });
 
         btnToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,50 +116,5 @@ public class BookingFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void getBookingByUserUID(String uid) {
-        dao.getBookingByUser(uid).addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Booking> booking = new ArrayList<>();
-
-                for (DataSnapshot data: snapshot.getChildren()) {
-                    Booking book = data.getValue(Booking.class);
-                    booking.add(book);
-                }
-
-                if (booking.isEmpty() || booking.get(0).getKd_booking().isEmpty()) {
-                    clNotLogin.setVisibility(View.VISIBLE);
-                    clLogin.setVisibility(View.GONE);
-
-                    btnToLogin.setVisibility(View.GONE);
-
-                    textView3.setText("Booking First");
-                    textView4.setText("Empty Booking, U Must Booking First");
-                } else {
-                    clNotLogin.setVisibility(View.GONE);
-                    clLogin.setVisibility(View.VISIBLE);
-                }
-
-                recyclerViewBooking.setListDataItems(booking);
-                recyclerViewBooking.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // NULL DATA
-            }
-        });
-    }
-
-    private void initRecyclerViewTrendingRoom(View view) {
-        recyclerViewBooking = new RecyclerViewBooking(getActivity());
-
-        //
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        rcyclerViewBooking.setLayoutManager(horizontalLayoutManager);
-        rcyclerViewBooking.setAdapter(recyclerViewBooking);
     }
 }

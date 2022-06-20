@@ -1,9 +1,9 @@
 package com.example.java_hotel_system.model.booking;
 
 public class Booking {
-    private String kd_booking, total, user_buy, rating, nama_kamar, kota, check_in, check_out, lokasi, image_url;
+    private String kd_booking, total, user_buy, rating, nama_kamar, kota, check_in, check_out, lokasi, image_url, current_date;
 
-    public Booking(String kd_booking, String total, String user_buy, String rating, String nama_kamar, String kota, String check_in, String check_out, String lokasi, String image_url) {
+    public Booking(String kd_booking, String total, String user_buy, String rating, String nama_kamar, String kota, String check_in, String check_out, String lokasi, String image_url, String current_date) {
         this.kd_booking = kd_booking;
         this.total = total;
         this.user_buy = user_buy;
@@ -14,6 +14,7 @@ public class Booking {
         this.check_out = check_out;
         this.lokasi = lokasi;
         this.image_url = image_url;
+        this.current_date = current_date;
     }
 
     public Booking() {
@@ -98,5 +99,13 @@ public class Booking {
 
     public void setLokasi(String lokasi) {
         this.lokasi = lokasi;
+    }
+
+    public String getCurrent_date() {
+        return current_date;
+    }
+
+    public void setCurrent_date(String current_date) {
+        this.current_date = current_date;
     }
 }
