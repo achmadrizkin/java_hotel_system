@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.dao.DaoKamar;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.RoomDetailActivity;
 
 import java.util.HashMap;
@@ -20,8 +21,9 @@ import java.util.HashMap;
 public class EditRoomActivity extends AppCompatActivity {
     ImageView ivBack;
     private EditText etNamaKamar, etUrlGambar, etKota, etLokasi, etHarga, etDeskripsi, etJmlhKasur, etJmlhRuangan, etRating;
-    private Button btnInsertData;
+    private Button btnInsertData, btnUpdateLocation;
     DaoKamar dao;
+    private String locationF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,13 @@ public class EditRoomActivity extends AppCompatActivity {
         String location = intent.getExtras().getString("location");
         String kd_kamar = intent.getExtras().getString("kd_kamar");
         String harga = intent.getExtras().getString("harga");
+        String location2 = intent.getExtras().getString("location2");
+
+        if (location2 == null) {
+            locationF = location;
+        } else {
+            locationF = location2;
+        }
 
         //
         dao = new DaoKamar();
@@ -55,6 +64,8 @@ public class EditRoomActivity extends AppCompatActivity {
         etJmlhKasur = findViewById(R.id.etJmlhKasur);
         etRating = findViewById(R.id.etRating);
         etJmlhRuangan = findViewById(R.id.etJmlhRuangan);
+        ivBack = findViewById(R.id.ivBack);
+        btnUpdateLocation = findViewById(R.id.btnUpdateLocation);
 
         etNamaKamar.setText(name);
         etUrlGambar.setText(image_url);
@@ -64,12 +75,56 @@ public class EditRoomActivity extends AppCompatActivity {
         etJmlhKasur.setText(jmlh_kasur);
         etJmlhRuangan.setText(jmlh_ruangan);
         etRating.setText(rating);
-        etLokasi.setText(location);
+        etLokasi.setText(locationF);
 
         btnInsertData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateData(key);
+                if (etNamaKamar.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "NAMA KAMAR Cannot NULL", Toast.LENGTH_LONG).show();
+                } else if (etUrlGambar.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "LINK URL Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etRating.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Rating Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etHarga.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Harga Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etDeskripsi.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Deskripsi Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etJmlhKasur.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Jmlh Kasur Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etJmlhRuangan.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Jmlh Ruangan Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else if (etKota.getText().toString().isEmpty()) {
+                    Toast.makeText(EditRoomActivity.this, "Kota Cannot NULL: ", Toast.LENGTH_LONG).show();
+                } else {
+                    updateData(key);
+                }
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        btnUpdateLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), EditGetLocationMap.class);
+                i.putExtra("key", key);
+                i.putExtra("name", name);
+                i.putExtra("kd_kamar", kd_kamar);
+                i.putExtra("image_url", image_url);
+                i.putExtra("rating", rating);
+                i.putExtra("kota", kota);
+                i.putExtra("deskripsi", deskripsi);
+                i.putExtra("jmlh_ruangan", jmlh_ruangan);
+                i.putExtra("jmlh_kasur", jmlh_kasur);
+                i.putExtra("location", location);
+                i.putExtra("harga", harga);
+                startActivity(i);
             }
         });
     }

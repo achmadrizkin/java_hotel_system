@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.bottomNav.profile.map.GetLocationMap">
+    tools:context=".view.bottomNav.room_detail.edit.EditGetLocationMap">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
@@ -26,6 +25,7 @@
     <TextView
         android:id="@+id/tvLatLong"
         android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"

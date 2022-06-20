@@ -27,9 +27,9 @@ public class QrDetailsActivity extends AppCompatActivity {
     String decrypted;
     private DaoBooking dao;
     private ProgressBar pbLoading;
-    private ConstraintLayout clQrCodeSuccess;
+    private ConstraintLayout clQrCodeSuccess, clQrCodeFailed;
     private TextView tvKodeBooking, tvUserId, tvCheckIn, tvCheckOut, tvTotalHarga;
-    private Button btnBack;
+    private Button btnBack, btnBack2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,12 @@ public class QrDetailsActivity extends AppCompatActivity {
         tvCheckIn = findViewById(R.id.tvCheckIn);
         tvCheckOut = findViewById(R.id.tvCheckOut);
         tvTotalHarga = findViewById(R.id.tvTotalHarga);
+        clQrCodeFailed = findViewById(R.id.clQrCodeFailed);
+        btnBack2 = findViewById(R.id.btnBack2);
 
         pbLoading.setVisibility(View.VISIBLE);
         clQrCodeSuccess.setVisibility(View.GONE);
+        clQrCodeFailed.setVisibility(View.GONE);
 
         // decrpty first
         Intent intent = getIntent();
@@ -67,6 +70,13 @@ public class QrDetailsActivity extends AppCompatActivity {
 
         //
         btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        btnBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -98,6 +108,7 @@ public class QrDetailsActivity extends AppCompatActivity {
                     tvTotalHarga.setText(bookings.get(0).getTotal());
                 } else {
                     clQrCodeSuccess.setVisibility(View.GONE);
+                    clQrCodeFailed.setVisibility(View.VISIBLE);
                 }
                 pbLoading.setVisibility(View.GONE);
             }

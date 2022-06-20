@@ -18,7 +18,7 @@ import com.example.java_hotel_system.view.bottomNav.booking.show_qr.ShowQrActivi
 public class BookingDetailsActivity extends AppCompatActivity {
 
     private ImageView ivBack, ivPhotoRoom;
-    private TextView tvNamaKamar, tvRating;
+    private TextView tvNamaKamar, tvRating, tvKota, tvCheckIn, tvCheckOut, tvKdBooking, tvUserId;
     private Button btnMaps, btnShowQR;
     String encrypted;
 
@@ -33,6 +33,10 @@ public class BookingDetailsActivity extends AppCompatActivity {
         String rating = intent.getExtras().getString("rating");
         String lokasi = intent.getExtras().getString("lokasi");
         String kd_booking = intent.getExtras().getString("kd_booking");
+        String kota = intent.getExtras().getString("kota");
+        String check_in = intent.getExtras().getString("check_in");
+        String check_out = intent.getExtras().getString("check_out");
+        String user_buy = intent.getExtras().getString("user_buy");
 
         ivBack = findViewById(R.id.ivBack);
         ivPhotoRoom = findViewById(R.id.ivPhotoRoom);
@@ -40,10 +44,19 @@ public class BookingDetailsActivity extends AppCompatActivity {
         tvRating = findViewById(R.id.textView18);
         btnMaps = findViewById(R.id.btnMaps);
         btnShowQR = findViewById(R.id.btnShowQR);
+        tvKota = findViewById(R.id.textView16);
+        tvCheckIn = findViewById(R.id.tvCheckIn);
+        tvCheckOut = findViewById(R.id.tvCheckOut);
+        tvKdBooking = findViewById(R.id.tvKdBooking);
+        tvUserId = findViewById(R.id.tvUserId);
 
         tvNamaKamar.setText(nama_kamar);
-        tvNamaKamar.setText(nama_kamar);
+        tvKota.setText(kota);
         tvRating.setText(rating);
+        tvCheckIn.setText(check_in);
+        tvCheckOut.setText(check_out);
+        tvKdBooking.setText(kd_booking);
+        tvUserId.setText(user_buy);
 
         // encrypted
         MCrypt mcrypt = new MCrypt();

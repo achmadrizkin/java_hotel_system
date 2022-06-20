@@ -65,13 +65,13 @@ public class BookingFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
-        //
-        getBookingByUserUID(user.getUid());
-        initRecyclerViewTrendingRoom(view);
-
         if (user != null) {
             clLogin.setVisibility(View.VISIBLE);
             clNotLogin.setVisibility(View.GONE);
+
+            //
+            getBookingByUserUID(user.getUid());
+            initRecyclerViewTrendingRoom(view);
         } else {
             clNotLogin.setVisibility(View.VISIBLE);
             clLogin.setVisibility(View.GONE);
