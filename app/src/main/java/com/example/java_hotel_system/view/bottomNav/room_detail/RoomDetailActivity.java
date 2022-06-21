@@ -1,15 +1,13 @@
 package com.example.java_hotel_system.view.bottomNav.room_detail;
 
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ParseException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,22 +23,18 @@ import com.example.java_hotel_system.dao.DaoBooking;
 import com.example.java_hotel_system.dao.DaoKamar;
 import com.example.java_hotel_system.model.booking.Booking;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
-import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.payment.PaymentSuccessActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 import java.util.UUID;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -246,11 +240,31 @@ public class RoomDetailActivity extends AppCompatActivity {
             }
         });
 
+        // ALERT DIALOG
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // DELETE
-                removeKamar(key);
+                builder.setMessage("Are you sure to delete ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        removeKamar(key);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
