@@ -17,4 +17,7 @@ public interface RetroService {
     // example: https://achmadrizkin.my.id/mobprog_hotel/select_user.php?uid=E5WuhBcN8wOYRcfj5HwRVVzfj203
     @GET("select_user.php")
     Observable<ListUser> getUserByUID(@Query("uid") String uid);
+
+    @GET("select_all_user.php")
+    Observable<ListUser> getAllUser();
 }

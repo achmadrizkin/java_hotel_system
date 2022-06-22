@@ -18,6 +18,32 @@ public class UserDetailsRepo {
         this.retroServiceInterface = retroServiceInterface;
     }
 
+    public void getAllUserFromApiCall(MutableLiveData<ListUser> liveData) {
+        retroServiceInterface.getAllUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ListUser>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(ListUser listUser) {
+                liveData.postValue(listUser);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                liveData.postValue(null);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
     // use Schedulers.computation if u have like 10.000 data
     public void postUserFacebookFromApiCall(String uid, MutableLiveData<ListUser> liveData) {
         retroServiceInterface.getUserByUID(uid)
