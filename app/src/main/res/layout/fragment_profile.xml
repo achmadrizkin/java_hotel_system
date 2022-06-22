@@ -7,8 +7,17 @@
     android:layout_margin="15dp"
     tools:context=".view.bottomNav.profile.ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ProgressBar
         android:visibility="gone"
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,10 +26,11 @@
             android:id="@+id/btnInfoApp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="92dp"
             android:text="Info App"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddRoom" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -63,42 +73,42 @@
             android:id="@+id/btnLogOut"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
+            android:layout_marginTop="188dp"
             android:text="LOGOUT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnScanQR" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
         <Button
             android:id="@+id/btnAddRoom"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="248dp"
             android:text="Add Room"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail"
+            app:layout_constraintVertical_bias="0.15" />
 
         <Button
             android:id="@+id/btnScanQR"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="52dp"
+            android:layout_marginTop="140dp"
             android:text="Scan QR"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnInfoApp"
-            app:layout_constraintVertical_bias="0.303" />
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
         android:id="@+id/clNotLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-
             android:id="@+id/imageView3"
             android:layout_width="327dp"
             android:layout_height="513dp"

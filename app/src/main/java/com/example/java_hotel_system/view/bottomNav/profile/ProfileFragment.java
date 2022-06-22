@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,16 +20,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blikoon.qrcodescanner.QrCodeActivity;
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
+import com.example.java_hotel_system.model.user.ListUser;
+import com.example.java_hotel_system.model.user.UserRequest;
+import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.info_app.InfoAppActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.map.GetLocationMap;
 import com.example.java_hotel_system.view.bottomNav.profile.qr_details.QrDetailsActivity;
 import com.example.java_hotel_system.view.login.LoginActivity;
+import com.example.java_hotel_system.view.select_role.SelectRoleActivity;
+import com.example.java_hotel_system.view_model.LoginFacebookViewModel;
+import com.example.java_hotel_system.view_model.UserDetailsViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;
@@ -37,18 +47,23 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class ProfileFragment extends Fragment {
     private Button btnSignOut;
     private FirebaseAuth mAuth;
     private ImageView profile_image;
     private TextView tvDisplayName, tvEmail;
+    private ProgressBar pbLoading;
 
     private ConstraintLayout clLogin, clNotLogin;
     private Button btnToLogin, btnInfoApp, btnAddRoom;
 
     private Button btnScanQR;
     private static final int REQUEST_CODE_QR_SCAN = 101;
+
+    private UserDetailsViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,23 +88,18 @@ public class ProfileFragment extends Fragment {
         btnInfoApp = view.findViewById(R.id.btnInfoApp);
         btnAddRoom = view.findViewById(R.id.btnAddRoom);
         btnScanQR = view.findViewById(R.id.btnScanQR);
+        pbLoading = view.findViewById(R.id.pbLoading);
 
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
 
-        if (user != null) {
-            if (user.getDisplayName() != "" && user.getPhotoUrl().toString() != "") {
-                tvDisplayName.setText(user.getDisplayName());
-                tvEmail.setText(user.getUid());
-                Glide.with(profile_image).load(user.getPhotoUrl()).into(profile_image);
-            } else if (user.getDisplayName() == null || user.getDisplayName() == "") {
-                tvDisplayName.setText("Anonim");
-                tvEmail.setText(user.getUid());
-                Glide.with(profile_image).load(user.getPhotoUrl()).into(profile_image);
-            }
+        clLogin.setVisibility(View.GONE);
+        clNotLogin.setVisibility(View.GONE);
+        pbLoading.setVisibility(View.VISIBLE);
 
-            clLogin.setVisibility(View.VISIBLE);
-            clNotLogin.setVisibility(View.GONE);
+        if (user != null) {
+            // call API
+            getUserDetailByUIDFromView(mAuth.getCurrentUser().getUid());
         } else {
             clNotLogin.setVisibility(View.VISIBLE);
             clLogin.setVisibility(View.GONE);
@@ -209,4 +219,34 @@ public class ProfileFragment extends Fragment {
                     }
                 }).check();
     }
+
+    private void getUserDetailByUIDFromView(String uid) {
+        viewModel = new ViewModelProvider(this).get(UserDetailsViewModel.class);
+        viewModel.getUserDetailsByUIDObservable().observe(getActivity(), new Observer<ListUser>() {
+            @Override
+            public void onChanged(ListUser t) {
+                if (t == null) {
+
+                } else {
+                    tvDisplayName.setText(t.getData().get(0).getName());
+                    tvEmail.setText(t.getData().get(0).getRole() + " " + t.getData().get(0).getLog_via());
+                    Glide.with(profile_image).load(t.getData().get(0).getImage_url()).into(profile_image);
+
+                    if (t.getData().get(0).getRole().equals("user")) {
+                        btnAddRoom.setVisibility(View.GONE);
+                    } else {
+                        btnAddRoom.setVisibility(View.VISIBLE);
+                    }
+
+
+                    clLogin.setVisibility(View.VISIBLE);
+                    pbLoading.setVisibility(View.GONE);
+                    clNotLogin.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        viewModel.getUserDetailsByUIDOfData(uid);
+    }
+
 }
