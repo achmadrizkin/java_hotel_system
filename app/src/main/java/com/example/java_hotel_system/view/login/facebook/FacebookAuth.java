@@ -79,7 +79,7 @@ public class FacebookAuth extends LoginActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Intent i = new Intent(getApplicationContext(), BookingDetailsActivity.class);
+                            Intent i = new Intent(getApplicationContext(), SelectRoleActivity.class);
                             i.putExtra("log_via", "FACEBOOK");
                             startActivity(i);
 

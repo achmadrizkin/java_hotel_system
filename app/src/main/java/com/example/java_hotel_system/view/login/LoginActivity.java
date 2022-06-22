@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Success Sign In", Toast.LENGTH_LONG).show();
 
-                    Intent i = new Intent(getApplicationContext(), BookingDetailsActivity.class);
+                    Intent i = new Intent(getApplicationContext(), SelectRoleActivity.class);
                     i.putExtra("log_via", "GOOGLE");
                     startActivity(i);
 
