@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
+import com.example.java_hotel_system.view.select_role.SelectRoleActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -116,9 +117,11 @@ public class GithubAuth extends AppCompatActivity {
     }
 
     private void openNextActivity() {
-        Intent i = new Intent(GithubAuth.this, BottomNavigationActivity.class);
+        Intent i = new Intent(GithubAuth.this, SelectRoleActivity.class);
+        i.putExtra("log_via", "GITHUB");
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+
         finish();
     }
 

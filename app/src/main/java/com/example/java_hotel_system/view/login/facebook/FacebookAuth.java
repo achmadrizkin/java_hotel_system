@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.java_hotel_system.model.user.UserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.bottomNav.booking.booking_details.BookingDetailsActivity;
 import com.example.java_hotel_system.view.login.LoginActivity;
+import com.example.java_hotel_system.view.select_role.SelectRoleActivity;
+import com.example.java_hotel_system.view_model.LoginFacebookViewModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -38,7 +42,6 @@ public class FacebookAuth extends LoginActivity {
     // FACEBOOK
     CallbackManager callbackManager;
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +79,11 @@ public class FacebookAuth extends LoginActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
-                            finish();
+                            Intent i = new Intent(getApplicationContext(), BookingDetailsActivity.class);
+                            i.putExtra("log_via", "FACEBOOK");
+                            startActivity(i);
 
-                            // POST IF USER FIRST TIME LOGIN
-                            // IF USER ALREADY LOGIN, it just update
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), "Email sudah pernah digunakan",

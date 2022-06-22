@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
+import com.example.java_hotel_system.view.bottomNav.booking.booking_details.BookingDetailsActivity;
 import com.example.java_hotel_system.view.login.facebook.FacebookAuth;
 import com.example.java_hotel_system.view.login.github.GithubAuth;
+import com.example.java_hotel_system.view.select_role.SelectRoleActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -131,7 +133,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Success Sign In", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), BottomNavigationActivity.class));
+
+                    Intent i = new Intent(getApplicationContext(), BookingDetailsActivity.class);
+                    i.putExtra("log_via", "GOOGLE");
+                    startActivity(i);
+
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Sign In", Toast.LENGTH_LONG).show();
