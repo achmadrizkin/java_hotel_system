@@ -20,7 +20,7 @@
     <string name="map_key">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
     <string name="mapbox_access_token">sk.eyJ1IjoiYWNobWFkcml6a2luMTIzIiwiYSI6ImNsNDB0eDloZTA5emMzZG52eXE1Mmh0NG0ifQ.7CZZvzZn9KJHfGSqIhIEiA</string>
 
-<!--    -->
+    <!--    -->
     <string-array name="role">
         <item>user</item>
         <item>admin</item>

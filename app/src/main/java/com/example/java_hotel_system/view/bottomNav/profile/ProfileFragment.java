@@ -31,6 +31,7 @@ import com.example.java_hotel_system.model.user.ListUser;
 import com.example.java_hotel_system.model.user.UserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.all_user.AllUserActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.info_app.InfoAppActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.map.GetLocationMap;
 import com.example.java_hotel_system.view.bottomNav.profile.qr_details.QrDetailsActivity;
@@ -58,7 +59,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar pbLoading;
 
     private ConstraintLayout clLogin, clNotLogin;
-    private Button btnToLogin, btnInfoApp, btnAddRoom;
+    private Button btnToLogin, btnInfoApp, btnAddRoom, btnAllUser;
 
     private Button btnScanQR;
     private static final int REQUEST_CODE_QR_SCAN = 101;
@@ -89,6 +90,7 @@ public class ProfileFragment extends Fragment {
         btnAddRoom = view.findViewById(R.id.btnAddRoom);
         btnScanQR = view.findViewById(R.id.btnScanQR);
         pbLoading = view.findViewById(R.id.pbLoading);
+        btnAllUser = view.findViewById(R.id.btnAllUser);
 
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
@@ -104,6 +106,13 @@ public class ProfileFragment extends Fragment {
             clNotLogin.setVisibility(View.VISIBLE);
             clLogin.setVisibility(View.GONE);
         }
+
+        btnAllUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AllUserActivity.class));
+            }
+        });
 
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +235,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(ListUser t) {
                 if (t == null) {
-
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
                     tvDisplayName.setText(t.getData().get(0).getName());
                     tvEmail.setText(t.getData().get(0).getRole() + " " + t.getData().get(0).getLog_via());
@@ -234,10 +244,16 @@ public class ProfileFragment extends Fragment {
 
                     if (t.getData().get(0).getRole().equals("user")) {
                         btnAddRoom.setVisibility(View.GONE);
-                    } else {
+                        btnAllUser.setVisibility(View.GONE);
+                    } else if (t.getData().get(0).getRole().equals("admin")){
                         btnAddRoom.setVisibility(View.VISIBLE);
+                        btnAllUser.setVisibility(View.GONE);
+                    } else if (t.getData().get(0).getRole().equals("super_admin")) {
+                        btnAllUser.setVisibility(View.VISIBLE);
+                    } else if (t.getData().get(0).getRole().equals("x")) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
-
 
                     clLogin.setVisibility(View.VISIBLE);
                     pbLoading.setVisibility(View.GONE);

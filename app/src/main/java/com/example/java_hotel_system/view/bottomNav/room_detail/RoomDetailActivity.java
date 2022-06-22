@@ -2,8 +2,13 @@ package com.example.java_hotel_system.view.bottomNav.room_detail;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ParseException;
@@ -14,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +28,12 @@ import com.example.java_hotel_system.R;
 import com.example.java_hotel_system.dao.DaoBooking;
 import com.example.java_hotel_system.dao.DaoKamar;
 import com.example.java_hotel_system.model.booking.Booking;
+import com.example.java_hotel_system.model.user.ListUser;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.edit.EditRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.room_detail.payment.PaymentSuccessActivity;
+import com.example.java_hotel_system.view.login.LoginActivity;
+import com.example.java_hotel_system.view_model.UserDetailsViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.DateFormat;
@@ -54,6 +63,8 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     //
     private FirebaseAuth mAuth;
+    private UserDetailsViewModel viewModel;
+    private LinearLayoutCompat llcDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +105,11 @@ public class RoomDetailActivity extends AppCompatActivity {
         tvHarga = findViewById(R.id.tvHarga);
         ivDelete = findViewById(R.id.ivDelete);
         tvHari = findViewById(R.id.tvHari);
+        llcDetails = findViewById(R.id.llcDetails);
 
         mAuth = FirebaseAuth.getInstance();
+
+        llcDetails.setVisibility(View.GONE);
 
         //
         dao = new DaoBooking();
@@ -184,11 +198,8 @@ public class RoomDetailActivity extends AppCompatActivity {
             }
         });
 
-        if (mAuth.getCurrentUser() == null) {
-            ivEdit.setVisibility(View.GONE);
-            ivDelete.setVisibility(View.GONE);
-        }
-
+        // call
+        getUserDetailByUIDFromView(mAuth.getCurrentUser().getUid());
 
         // SET
         tvName.setText(name);
@@ -319,6 +330,31 @@ public class RoomDetailActivity extends AppCompatActivity {
         }).addOnFailureListener(er -> {
             Toast.makeText(RoomDetailActivity.this, "Delete Data Fail", Toast.LENGTH_LONG).show();
         });
+    }
+
+    private void getUserDetailByUIDFromView(String uid) {
+        viewModel = new ViewModelProvider(this).get(UserDetailsViewModel.class);
+        viewModel.getUserDetailsByUIDObservable().observe(this, new Observer<ListUser>() {
+            @Override
+            public void onChanged(ListUser t) {
+                if (t == null) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                } else {
+                    if (t.getData().get(0).getRole().equals("user")) {
+                        ivDelete.setVisibility(View.GONE);
+                        ivEdit.setVisibility(View.GONE);
+                    } else {
+                        ivDelete.setVisibility(View.VISIBLE);
+                        ivEdit.setVisibility(View.VISIBLE);
+                    }
+
+                    llcDetails.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        viewModel.getUserDetailsByUIDOfData(uid);
     }
 
 }

@@ -8,6 +8,8 @@
     tools:context=".view.bottomNav.room_detail.RoomDetailActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:visibility="gone"
+        android:id="@+id/llcDetails"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
