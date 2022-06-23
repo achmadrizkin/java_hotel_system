@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.java_hotel_system.R;
@@ -32,6 +33,7 @@ public class AllUserActivity extends AppCompatActivity {
     private RecyclerView rvAllUser;
     private UserDetailsViewModel viewModel;
     private ImageView ivBack;
+    private ProgressBar pbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,9 @@ public class AllUserActivity extends AppCompatActivity {
 
         rvAllUser = findViewById(R.id.rvAllUser);
         ivBack = findViewById(R.id.ivBack);
+        pbLoading = findViewById(R.id.pbLoading);
+
+        pbLoading.setVisibility(View.VISIBLE);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +70,7 @@ public class AllUserActivity extends AppCompatActivity {
             @Override
             public void onChanged(ListUser userRequest) {
                 if (userRequest != null) {
+                    pbLoading.setVisibility(View.GONE);
                     recyclerViewAllUser.setListDataItems(userRequest);
                     recyclerViewAllUser.notifyDataSetChanged();
                 }
