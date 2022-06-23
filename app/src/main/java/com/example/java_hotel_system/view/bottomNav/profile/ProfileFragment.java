@@ -32,6 +32,7 @@ import com.example.java_hotel_system.model.user.UserRequest;
 import com.example.java_hotel_system.view.bottomNav.BottomNavigationActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.add_room.AddRoomActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.all_user.AllUserActivity;
+import com.example.java_hotel_system.view.bottomNav.profile.history_booking.HistoryBookingActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.info_app.InfoAppActivity;
 import com.example.java_hotel_system.view.bottomNav.profile.map.GetLocationMap;
 import com.example.java_hotel_system.view.bottomNav.profile.qr_details.QrDetailsActivity;
@@ -59,7 +60,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar pbLoading;
 
     private ConstraintLayout clLogin, clNotLogin;
-    private Button btnToLogin, btnInfoApp, btnAddRoom, btnAllUser;
+    private Button btnToLogin, btnInfoApp, btnAddRoom, btnAllUser, btnHistoryBooking;
 
     private Button btnScanQR;
     private static final int REQUEST_CODE_QR_SCAN = 101;
@@ -91,6 +92,7 @@ public class ProfileFragment extends Fragment {
         btnScanQR = view.findViewById(R.id.btnScanQR);
         pbLoading = view.findViewById(R.id.pbLoading);
         btnAllUser = view.findViewById(R.id.btnAllUser);
+        btnHistoryBooking = view.findViewById(R.id.btnHistoryBooking);
 
         clLogin = view.findViewById(R.id.clLogin);
         clNotLogin = view.findViewById(R.id.clNotLogin);
@@ -148,6 +150,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 permissionHandler();
+            }
+        });
+
+        btnHistoryBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), HistoryBookingActivity.class));
             }
         });
 
@@ -245,11 +254,15 @@ public class ProfileFragment extends Fragment {
                     if (t.getData().get(0).getRole().equals("user")) {
                         btnAddRoom.setVisibility(View.GONE);
                         btnAllUser.setVisibility(View.GONE);
+                        btnHistoryBooking.setVisibility(View.VISIBLE);
                     } else if (t.getData().get(0).getRole().equals("admin")){
                         btnAddRoom.setVisibility(View.VISIBLE);
                         btnAllUser.setVisibility(View.GONE);
+                        btnHistoryBooking.setVisibility(View.GONE);
                     } else if (t.getData().get(0).getRole().equals("super_admin")) {
                         btnAllUser.setVisibility(View.VISIBLE);
+                        btnHistoryBooking.setVisibility(View.GONE);
+                        btnAddRoom.setVisibility(View.GONE);
                     } else if (t.getData().get(0).getRole().equals("x")) {
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(getActivity(), LoginActivity.class));

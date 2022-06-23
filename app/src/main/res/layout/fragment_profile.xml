@@ -80,10 +80,23 @@
             app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btnAddRoom"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="Add Room"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail"
+            app:layout_constraintVertical_bias="0.15" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnHistoryBooking"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="History Booking"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

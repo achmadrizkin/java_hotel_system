@@ -29,6 +29,9 @@
         android:theme="@style/Theme.Java_hotel_system"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.bottomNav.profile.history_booking.HistoryBookingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.bottomNav.profile.user_detail.UserDetailsActivity"
             android:exported="false" />
         <activity
