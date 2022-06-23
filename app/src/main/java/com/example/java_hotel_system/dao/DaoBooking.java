@@ -27,4 +27,8 @@ public class DaoBooking {
         return databaseReference.orderByChild("kd_booking").startAt(kd_booking).endAt(kd_booking+ "~");
     }
 
+    // 20-06-2022
+    public Query getBookingByCurrentDate(String current_date) {
+        return databaseReference.orderByChild("current_date").startAt(current_date).endAt(current_date+ "~");
+    }
 }
