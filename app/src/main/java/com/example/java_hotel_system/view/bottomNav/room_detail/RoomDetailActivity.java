@@ -199,7 +199,6 @@ public class RoomDetailActivity extends AppCompatActivity {
         });
 
         // call
-        getUserDetailByUIDFromView(mAuth.getCurrentUser().getUid());
 
         // SET
         tvName.setText(name);
@@ -280,8 +279,14 @@ public class RoomDetailActivity extends AppCompatActivity {
         });
 
         if (mAuth.getCurrentUser() != null) {
+            getUserDetailByUIDFromView(mAuth.getCurrentUser().getUid());
             btnBooking.setVisibility(View.VISIBLE);
         } else {
+            llcDetails.setVisibility(View.VISIBLE);
+
+            ivEdit.setVisibility(View.GONE);
+            ivDelete.setVisibility(View.GONE);
+
             btnBooking.setVisibility(View.GONE);
             tvNotLogin.setVisibility(View.VISIBLE);
         }
@@ -338,8 +343,7 @@ public class RoomDetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(ListUser t) {
                 if (t == null) {
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    //
                 } else {
                     if (t.getData().get(0).getRole().equals("user")) {
                         ivDelete.setVisibility(View.GONE);
