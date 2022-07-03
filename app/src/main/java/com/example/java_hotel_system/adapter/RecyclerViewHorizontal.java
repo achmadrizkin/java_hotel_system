@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.example.java_hotel_system.R;
@@ -42,10 +43,18 @@ public class RecyclerViewHorizontal extends RecyclerView.Adapter<RecyclerViewHor
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHorizontal.MyViewHolder holder, int position) {
+        CircularProgressDrawable drawable = new CircularProgressDrawable(holder.ivKamar.getContext());
+        drawable.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+        drawable.setCenterRadius(30f);
+        drawable.setStrokeWidth(5f);
+        // set all other properties as you would see fit and start it
+        drawable.start();
+
+
         holder.tvNama.setText(listItems.get(position).getNama());
         holder.tvLokasi.setText(listItems.get(position).getKota());
         holder.tvRating.setText(listItems.get(position).getRating());
-        Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).placeholder(R.drawable.erorr_picture).into(holder.ivKamar);
+        Glide.with(holder.ivKamar).load(listItems.get(position).getImage_url()).placeholder(drawable).into(holder.ivKamar);
 
         // INTENT
         holder.cvHotel.setOnClickListener(new View.OnClickListener() {

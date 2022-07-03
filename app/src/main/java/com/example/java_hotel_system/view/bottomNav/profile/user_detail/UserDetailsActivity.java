@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class UserDetailsActivity extends AppCompatActivity {
     private LoginFacebookViewModel viewModel;
     private TextView tvName, tvLoginAs;
-    private ImageView ivProfilePicture;
+    private ImageView ivProfilePicture, ivBack;
     private Button btnUpdateData;
     private Spinner spinner;
     private String valSpinner;
@@ -51,6 +51,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
         btnUpdateData = findViewById(R.id.btnUpdateData);
         spinner = findViewById(R.id.spinner);
+        ivBack = findViewById(R.id.ivBack);
 
         //
         viewModel = new ViewModelProvider(this).get(LoginFacebookViewModel.class);
@@ -83,6 +84,13 @@ public class UserDetailsActivity extends AppCompatActivity {
                 //
                 UserRequest a = new UserRequest(name, uid, image_url, valSpinner, log_via);
                 postUserByLoginFromView(a);
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
