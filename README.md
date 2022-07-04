@@ -93,9 +93,12 @@ https://achmadrizkin.my.id/mobprog_hotel/select_user.php?uid={YOUR_UID_RIGHT_HER
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://user-images.githubusercontent.com/75843138/177170867-b86862fb-224e-4482-ba82-a3d6664ab1a7.png"> |<img src="https://user-images.githubusercontent.com/75843138/177171117-b5533ad4-c23f-4c28-9322-a31726477a5e.png"> |<img src="https://user-images.githubusercontent.com/75843138/177171339-3cf100a3-29c9-442d-a916-b7542e818b12.png">
 
-  All User (super admin)              |   Change Role (super admin)      |  
-:-------------------------:|:-------------------------:|
-<img src="https://user-images.githubusercontent.com/75843138/177172002-57afd992-6da3-4f4c-840d-d45459728d92.png"> |<img src="https://user-images.githubusercontent.com/75843138/177172167-fef9ef5e-848a-48d5-9377-16ea482c354a.png"> 
+  All User (super admin)                  |   Change Role (super admin)      |  Room Details (role admin/super_admin)
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://user-images.githubusercontent.com/75843138/177172002-57afd992-6da3-4f4c-840d-d45459728d92.png"> |<img src="https://user-images.githubusercontent.com/75843138/177172167-fef9ef5e-848a-48d5-9377-16ea482c354a.png"> |<img src="https://user-images.githubusercontent.com/75843138/177174166-7a20d5d3-e9ed-4d22-a0c2-0101693d598f.png">
+
 
 ## Video Documentation
 https://drive.google.com/file/d/1SWFTcTWg_bVujjm-q9-kbavF5fZNihxI/view?usp=drivesdk (Scan Barcode)
+https://drive.google.com/file/d/1ShNPVX62bospT5yKuj_9RuhWhQv-tKtl/view?usp=drivesdk (Change Role)
+https://drive.google.com/file/d/1SlgNjTv_WIx86-OJRJePJUrLAIKYEyEe/view?usp=drivesdk (print into PDF)
